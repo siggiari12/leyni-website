@@ -10,36 +10,35 @@
 <body>
 
 <!-- ============ NAV ============ -->
-<header class="nav solid">
+<header class="nav">
   <div class="wrap nav-in">
-    <div class="nav-l">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-      <a class="link" href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
-      <a class="link" href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
-      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
-    </div>
     <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>SILK OF ICELAND</small></a>
     <div class="nav-r">
+      <a class="link" href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+      <a class="link" href="index.html#story" data-en="House" data-is="Húsið">House</a>
+      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
       <div class="lang" role="group" aria-label="Language">
         <button data-lang-btn="en">EN</button><span class="sep">/</span><button data-lang-btn="is">IS</button>
       </div>
-      <button class="link bag" data-open-cart aria-label="Bag">
+      <button class="bag" data-open-cart aria-label="Bag">
         <span data-en="Bag" data-is="Karfa">Bag</span> <span class="count">0</span>
       </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
-    <a href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
+    <a href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+    <a href="index.html#story" data-en="House" data-is="Húsið">House</a>
     <a href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
   </div>
 </header>
 
 <!-- ============ HEADER ============ -->
 <div class="wrap page-top">
-  <h1 data-en="The collection" data-is="Slæðurnar">The collection</h1>
-  <p class="sub" data-en="Nine designs in mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling."
-     data-is="Níu mynstur úr mulberry-silki, 88 × 88 cm. Hvert mynstur ber nafn staðar, stundar eða tilfinningar.">Nine designs in mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling.</p>
+  <span class="lbl" data-en="The collection — nine designs" data-is="Slæðurnar — níu mynstur">The collection — nine designs</span>
+  <h1><span data-en="Silk, named" data-is="Silki, nefnt">Silk, named</span> <em data-en="for Iceland." data-is="eftir Íslandi.">for Iceland.</em></h1>
+  <p class="sub" data-en="Mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling."
+     data-is="Mulberry-silki, 88 × 88 cm. Hvert mynstur ber nafn staðar, stundar eða tilfinningar.">Mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling.</p>
   <div class="filters">
     <button class="active" data-filter="all" data-en="All" data-is="Allt">All</button>
     <button data-filter="women" data-en="Women" data-is="Konur">Women</button>
@@ -49,24 +48,24 @@
 
 <!-- ============ GRID ============ -->
 <div class="wrap shop-grid">
-  <div class="cards three" id="shopCards"></div>
+  <div class="edit-grid" id="shopCards"></div>
 </div>
 
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div>
+      <div class="brand">
         <div class="fm">LEYNI</div>
         <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk."
            data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
       </div>
-      <div>
+      <div class="col">
         <h4 data-en="Shop" data-is="Verslun">Shop</h4>
         <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
         <a href="index.html#men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</a>
       </div>
-      <div>
+      <div class="col">
         <h4 data-en="Contact" data-is="Samband">Contact</h4>
         <a href="mailto:hello@leyni.is">hello@leyni.is</a>
         <a href="index.html#story" data-en="About" data-is="Um Leyni">About</a>
@@ -82,7 +81,7 @@
 <script src="app.js"></script>
 <script>
   function PAGE_RENDER(){
-    document.getElementById('shopCards').innerHTML = SCARVES.map(cardHTML).join('');
+    document.getElementById('shopCards').innerHTML = SCARVES.map((s,i)=>cardHTML(s,i)).join('');
     document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
       document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');

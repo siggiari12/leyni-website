@@ -2,7 +2,7 @@
 
 Storefront for **Leyni**, a mulberry-silk scarf label designed in Iceland.
 
-Cold-white photographic minimalism modelled on the Squarespace **Manor** template, typeset in **Gill Sans** (matching the Kynning 2026 deck; Hanken Grotesk fallback). Colour appears only as small per-scarf swatch chips sampled from the artwork.
+Editorial print-magazine minimalism: black / crisp white / raw linen, large Cormorant serif headlines over small tracked Gill Sans labels, asymmetric editorial grids (no standard product grid), sharp corners, underline links, subtle scroll reveals. Campaign line: "Think silk, think north."
 
 ## Pages
 

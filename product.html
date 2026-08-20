@@ -9,27 +9,25 @@
 <body>
 
 <!-- ============ NAV ============ -->
-<header class="nav solid">
+<header class="nav">
   <div class="wrap nav-in">
-    <div class="nav-l">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-      <a class="link" href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
-      <a class="link" href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
-      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
-    </div>
     <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>SILK OF ICELAND</small></a>
     <div class="nav-r">
+      <a class="link" href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+      <a class="link" href="index.html#story" data-en="House" data-is="Húsið">House</a>
+      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
       <div class="lang" role="group" aria-label="Language">
         <button data-lang-btn="en">EN</button><span class="sep">/</span><button data-lang-btn="is">IS</button>
       </div>
-      <button class="link bag" data-open-cart aria-label="Bag">
+      <button class="bag" data-open-cart aria-label="Bag">
         <span data-en="Bag" data-is="Karfa">Bag</span> <span class="count">0</span>
       </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
-    <a href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
+    <a href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+    <a href="index.html#story" data-en="House" data-is="Húsið">House</a>
     <a href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
   </div>
 </header>
@@ -47,12 +45,12 @@
     <div class="pdp-info" id="pdpInfo"><!-- rendered --></div>
   </div>
 
-  <section style="padding:110px 0 0">
-    <div class="sec-head">
+  <section class="related" style="padding-bottom:0">
+    <div class="sec-label">
       <h2 data-en="More from the collection" data-is="Fleiri úr línunni">More from the collection</h2>
-      <a href="shop.html" data-en="View all nine" data-is="Sjá allar níu">View all nine</a>
+      <a class="ulink" href="shop.html" data-en="All nine" data-is="Allar níu">All nine</a>
     </div>
-    <div class="cards three" id="related"></div>
+    <div class="edit-grid" id="related"></div>
   </section>
 </div>
 
@@ -60,17 +58,17 @@
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div>
+      <div class="brand">
         <div class="fm">LEYNI</div>
         <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk."
            data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
       </div>
-      <div>
+      <div class="col">
         <h4 data-en="Shop" data-is="Verslun">Shop</h4>
         <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
         <a href="index.html#men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</a>
       </div>
-      <div>
+      <div class="col">
         <h4 data-en="Contact" data-is="Samband">Contact</h4>
         <a href="mailto:hello@leyni.is">hello@leyni.is</a>
         <a href="index.html#story" data-en="About" data-is="Um Leyni">About</a>
@@ -95,21 +93,22 @@
     renderPDP();
     const i=SCARVES.indexOf(CUR);
     const rel=[1,2,3].map(k=>SCARVES[(i+k)%SCARVES.length]);
-    document.getElementById('related').innerHTML=rel.map(cardHTML).join('');
+    document.getElementById('related').innerHTML=rel.map((s,k)=>cardHTML(s,SCARVES.indexOf(s))).join('');
   }
   function renderPDP(){
     const s=CUR, l=lang();
+    const no=String(SCARVES.indexOf(s)+1).padStart(2,'0');
     document.getElementById('crumbName').textContent=s.name;
     const imgs=[`img/${s.slug}.jpg`];
     document.getElementById('mainImg').src=imgs[0];
     document.getElementById('mainImg').alt=`Leyni — ${s.name}`;
-    document.getElementById('thumbs').innerHTML=imgs.map((src,k)=>
-      `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join('');
-    const gloss = (l==='en'?s.en:s.is);
-    const glossLine = gloss && gloss!==s.name ? `(${gloss})` : '';
+    document.getElementById('thumbs').innerHTML=imgs.length>1?imgs.map((src,k)=>
+      `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join(''):'';
+    const gloss=(l==='en'?s.en:s.is);
+    const glossLine = gloss && gloss!==s.name ? ` — (${gloss.toUpperCase()})` : '';
     document.getElementById('pdpInfo').innerHTML=`
-      <h1><i class="sw" style="background:${s.color}"></i>${s.name}</h1>
-      ${glossLine?`<div class="gloss">${glossLine}</div>`:''}
+      <span class="lbl">№ ${no}${glossLine}</span>
+      <h1>${s.name}</h1>
       <div class="price">${money(PRICE)}</div>
       <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
 
@@ -126,7 +125,7 @@
         </div>
       </div>
       <div class="add-row">
-        <button class="btn dark block" onclick="addToCart('${s.slug}',QTY)"
+        <button class="btn block" onclick="addToCart('${s.slug}',QTY)"
           data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>
       </div>
 
