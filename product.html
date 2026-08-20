@@ -101,7 +101,6 @@
     const s=CUR, l=lang();
     document.getElementById('crumbName').textContent=s.name;
     const imgs=[`img/${s.slug}.jpg`];
-    if(s.slug==='raudisandur') imgs.push('img/hero.jpg');
     document.getElementById('mainImg').src=imgs[0];
     document.getElementById('mainImg').alt=`Leyni — ${s.name}`;
     document.getElementById('thumbs').innerHTML=imgs.map((src,k)=>
