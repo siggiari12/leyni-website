@@ -142,20 +142,18 @@ function initReveal(){
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 }
 
-/* ---------- Shared product card (kynning style) ---------- */
-function cardHTML(s){
+/* ---------- Shared product card (numbered editorial) ---------- */
+function cardHTML(s, i){
+  const no = String((typeof i==='number'?i:SCARVES.indexOf(s))+1).padStart(2,'0');
   const gloss = s.en ? `(${s.en})` : '';
   const glossIs = s.is && s.is!==s.name ? `(${s.is})` : '';
   return `<a class="card" href="product.html?s=${s.slug}">
-    <figure>
-      <img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}">
-      <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta í körfu">Quick add</span>
-    </figure>
+    <div class="idx">${no}</div>
+    <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}"></figure>
     <div class="meta">
-      <span class="nm">${s.name}</span>
-      <span class="pr">${money(PRICE)}</span>
+      <div class="nm">${s.name}</div>
+      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${money(PRICE)}</span></div>
     </div>
-    <div class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</div>
   </a>`;
 }
 
