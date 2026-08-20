@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LEYNI — Silk of Iceland</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <div class="nav-l">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+      <a class="link" href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
+      <a class="link" href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
+      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
+    </div>
+    <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>SILK OF ICELAND</small></a>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang-btn="en">EN</button><span class="sep">/</span><button data-lang-btn="is">IS</button>
+      </div>
+      <button class="link bag" data-open-cart aria-label="Bag">
+        <span data-en="Bag" data-is="Karfa">Bag</span> <span class="count">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="shop.html" data-en="Shop" data-is="Verslun">Shop</a>
+    <a href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
+    <a href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
+  </div>
+</header>
+
+<!-- ============ PDP ============ -->
+<div class="wrap pdp">
+  <div class="crumbs">
+    <a href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a> &nbsp;/&nbsp; <span id="crumbName"></span>
+  </div>
+  <div class="pdp-grid">
+    <div class="gallery">
+      <div class="main"><img id="mainImg" src="" alt="" /></div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <div class="pdp-info" id="pdpInfo"><!-- rendered --></div>
+  </div>
+
+  <!-- related -->
+  <section style="padding:120px 0 0">
+    <div class="head">
+      <h2 class="serif" data-en="More from the collection" data-is="Fleiri úr línunni">More from the collection</h2>
+      <a class="link" href="shop.html" style="border-bottom:1px solid var(--ink);padding-bottom:4px" data-en="View all" data-is="Sjá allt">View all</a>
+    </div>
+    <div class="cards three" id="related"></div>
+  </section>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="wordmark">LEYNI<small>SILK OF ICELAND</small></div>
+        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk." data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
+      </div>
+      <div>
+        <h4 data-en="Shop" data-is="Verslun">Shop</h4>
+        <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
+        <a href="index.html#men" data-en="Men · 55×55 (soon)" data-is="Karlar · 55×55 (bráðum)">Men · 55×55 (soon)</a>
+      </div>
+      <div>
+        <h4 data-en="House" data-is="Húsið">House</h4>
+        <a href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
+        <a href="index.html#craft" data-en="Craft & certification" data-is="Handverk og vottun">Craft & certification</a>
+        <a href="mailto:hello@leyni.is">hello@leyni.is</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <small>© 2026 Leyni · Silk of Iceland™</small>
+      <div class="foot-dots" id="footDots" aria-hidden="true"></div>
+      <small data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</small>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  let CUR=null, QTY=1;
+  function currentSlug(){
+    const p=new URLSearchParams(location.search).get('s');
+    return bySlug(p)?p:'raudisandur';
+  }
+  function PAGE_RENDER(){
+    document.getElementById('footDots').innerHTML =
+      SCARVES.map(s=>`<i style="background:${s.color}" title="${s.name}"></i>`).join('');
+    CUR=bySlug(currentSlug());
+    document.documentElement.style.setProperty('--accent',CUR.color);
+    renderPDP();
+    // related = next three in the list
+    const i=SCARVES.indexOf(CUR);
+    const rel=[1,2,3].map(k=>SCARVES[(i+k)%SCARVES.length]);
+    document.getElementById('related').innerHTML=rel.map(cardHTML).join('');
+  }
+  function renderPDP(){
+    const s=CUR, l=lang();
+    document.getElementById('crumbName').textContent=s.name;
+    // gallery: hero shot only accompanies the featured blue scarf; every scarf shows its print
+    const imgs=[`img/${s.slug}.jpg`];
+    if(s.slug==='raudisandur') imgs.push('img/hero.jpg');
+    document.getElementById('mainImg').src=imgs[0];
+    document.getElementById('mainImg').alt=`Leyni — ${s.name}`;
+    document.getElementById('thumbs').innerHTML=imgs.map((src,k)=>
+      `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join('');
+    const gloss = l==='en'?s.en:s.is;
+    document.getElementById('pdpInfo').innerHTML=`
+      <div class="tag"><i></i>${gloss||('<span data-en=\'Signature design\' data-is=\'Einkennismynstur\'>Signature design</span>')}</div>
+      <h1 class="serif">${s.name}</h1>
+      <div class="price">${money(PRICE)}</div>
+      <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
+
+      <div class="opt">
+        <div class="lbl" data-en="Size" data-is="Stærð">Size</div>
+        <div class="vals"><span class="on">88 × 88 cm</span></div>
+      </div>
+      <div class="opt">
+        <div class="lbl" data-en="Quantity" data-is="Fjöldi">Quantity</div>
+        <div class="qty">
+          <button onclick="bump(-1)" aria-label="Minus">−</button>
+          <span id="qtyVal">1</span>
+          <button onclick="bump(1)" aria-label="Plus">+</button>
+        </div>
+      </div>
+      <div class="add-row">
+        <button class="btn solid block" style="margin-top:0" onclick="addToCart('${s.slug}',QTY)"
+          data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>
+      </div>
+
+      <div class="acc">
+        <details open>
+          <summary><span data-en="Composition & care" data-is="Efni og umhirða">Composition & care</span><span class="pl">+</span></summary>
+          <div class="body" data-en="100% mulberry silk. Hand-rolled edges. Dry clean only, or hand wash cold and iron on low through a cloth."
+               data-is="100% mulberry-silki. Handrúllaðir kantar. Aðeins efnahreinsun, eða handþvottur í köldu og strauað við lágan hita í gegnum klút.">100% mulberry silk. Hand-rolled edges. Dry clean only, or hand wash cold and iron on low through a cloth.</div>
+        </details>
+        <details>
+          <summary><span data-en="Size & dimensions" data-is="Stærð og mál">Size & dimensions</span><span class="pl">+</span></summary>
+          <div class="body" data-en="Traditional square, 88 × 88 cm. Designed to knot, drape at the neck, or wear in the hair."
+               data-is="Hefðbundinn ferningur, 88 × 88 cm. Hönnuð til að hnýta, sveipa um hálsinn eða bera í hárinu.">Traditional square, 88 × 88 cm. Designed to knot, drape at the neck, or wear in the hair.</div>
+        </details>
+        <details>
+          <summary><span data-en="Certification" data-is="Vottun">Certification</span><span class="pl">+</span></summary>
+          <div class="body" data-en="OEKO-TEX® certified. Produced in Hangzhou, China, to certified quality standards."
+               data-is="OEKO-TEX®-vottað. Framleitt í Hangzhou í Kína samkvæmt vottuðum gæðastöðlum.">OEKO-TEX® certified. Produced in Hangzhou, China, to certified quality standards.</div>
+        </details>
+        <details>
+          <summary><span data-en="Shipping & returns" data-is="Sending og skil">Shipping & returns</span><span class="pl">+</span></summary>
+          <div class="body" data-en="Wrapped in signature packaging. Worldwide shipping. 14-day returns on unworn pieces."
+               data-is="Pakkað í einkennisumbúðir. Sending um allan heim. 14 daga skilaréttur á ónotuðum vörum.">Wrapped in signature packaging. Worldwide shipping. 14-day returns on unworn pieces.</div>
+        </details>
+      </div>`;
+    document.title = `${s.name} — LEYNI`;
+    QTY=1;
+  }
+  function setMain(src,btn){
+    document.getElementById('mainImg').src=src;
+    document.querySelectorAll('.thumbs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function bump(d){ QTY=Math.max(1,QTY+d); document.getElementById('qtyVal').textContent=QTY; }
+  function cardHTML(s){
+    return `<a class="card reveal in" style="--accent:${s.color}" href="product.html?s=${s.slug}">
+      <figure>
+        <img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}">
+        <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta við">Quick add</span>
+      </figure>
+      <div class="meta">
+        <div><div class="nm">${s.name}</div><div class="gl" data-en="${s.en}" data-is="${s.is}">${s.en}</div></div>
+        <div class="pr">${money(PRICE)}</div>
+      </div>
+    </a>`;
+  }
+  function PAGE_LANG(){ renderPDP(); document.querySelectorAll('#related .pr').forEach(el=>el.textContent=money(PRICE)); }
+</script>
+</body>
+</html>
