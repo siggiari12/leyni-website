@@ -152,7 +152,7 @@ function cardHTML(s){
       <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta í körfu">Quick add</span>
     </figure>
     <div class="meta">
-      <span class="nm"><i class="sw" style="background:${s.color}"></i>${s.name}</span>
+      <span class="nm">${s.name}</span>
       <span class="pr">${money(PRICE)}</span>
     </div>
     <div class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</div>

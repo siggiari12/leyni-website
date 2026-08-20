@@ -108,7 +108,7 @@
     const gloss = (l==='en'?s.en:s.is);
     const glossLine = gloss && gloss!==s.name ? `(${gloss})` : '';
     document.getElementById('pdpInfo').innerHTML=`
-      <h1><i class="sw" style="background:${s.color}"></i>${s.name}</h1>
+      <h1>${s.name}</h1>
       ${glossLine?`<div class="gloss">${glossLine}</div>`:''}
       <div class="price">${money(PRICE)}</div>
       <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
