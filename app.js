@@ -142,10 +142,28 @@ function initReveal(){
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 }
 
+/* ---------- Shared product card (kynning style) ---------- */
+function cardHTML(s){
+  const gloss = s.en ? `(${s.en})` : '';
+  const glossIs = s.is && s.is!==s.name ? `(${s.is})` : '';
+  return `<a class="card" href="product.html?s=${s.slug}">
+    <figure>
+      <img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}">
+      <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta í körfu">Quick add</span>
+    </figure>
+    <div class="meta">
+      <span class="nm"><i class="sw" style="background:${s.color}"></i>${s.name}</span>
+      <span class="pr">${money(PRICE)}</span>
+    </div>
+    <div class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</div>
+  </a>`;
+}
+
 /* ---------- Nav behaviour ---------- */
 function initNav(){
   const nav=document.querySelector('.nav');
-  const onScroll=()=>nav?.classList.toggle('scrolled',window.scrollY>8);
+  const th=()=> nav?.classList.contains('hero-nav') ? window.innerHeight-120 : 8;
+  const onScroll=()=>nav?.classList.toggle('scrolled',window.scrollY>th());
   window.addEventListener('scroll',onScroll); onScroll();
   const mb=document.getElementById('menuBtn'), mm=document.getElementById('mobileMenu');
   mb?.addEventListener('click',()=>mm?.classList.toggle('open'));

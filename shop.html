@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shop — LEYNI</title>
+<title>The Collection — LEYNI</title>
 <meta name="description" content="The Leyni collection — nine mulberry silk scarf designs, each named for Iceland." />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <!-- ============ NAV ============ -->
-<header class="nav">
+<header class="nav solid">
   <div class="wrap nav-in">
     <div class="nav-l">
       <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -37,45 +37,44 @@
 
 <!-- ============ HEADER ============ -->
 <div class="wrap page-top">
-  <div class="num" data-en="The collection" data-is="Slæðurnar">The collection</div>
-  <h1 class="serif" style="margin-top:.24em" data-en="Silk, named for Iceland." data-is="Silki, nefnt eftir Íslandi.">Silk, named for Iceland.</h1>
-  <p class="sub" data-en="Nine signature designs. Traditional 88 × 88 cm mulberry silk. Each pattern carries the name of a place, a moment or a feeling." data-is="Níu einkennismynstur. Hefðbundnar 88 × 88 cm mulberry-silkislæður. Hvert mynstur ber nafn staðar, stundar eða tilfinningar.">Nine signature designs. Traditional 88 × 88 cm mulberry silk. Each pattern carries the name of a place, a moment or a feeling.</p>
+  <h1 data-en="The collection" data-is="Slæðurnar">The collection</h1>
+  <p class="sub" data-en="Nine designs in mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling."
+     data-is="Níu mynstur úr mulberry-silki, 88 × 88 cm. Hvert mynstur ber nafn staðar, stundar eða tilfinningar.">Nine designs in mulberry silk, 88 × 88 cm. Each pattern carries the name of a place, a moment or a feeling.</p>
   <div class="filters">
     <button class="active" data-filter="all" data-en="All" data-is="Allt">All</button>
     <button data-filter="women" data-en="Women" data-is="Konur">Women</button>
-    <button data-filter="men" data-en="Men (soon)" data-is="Karlar (bráðum)">Men (soon)</button>
+    <button data-filter="men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</button>
   </div>
 </div>
 
 <!-- ============ GRID ============ -->
 <div class="wrap shop-grid">
-  <div class="cards grid9" id="shopCards"></div>
+  <div class="cards three" id="shopCards"></div>
 </div>
 
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <div class="wordmark">LEYNI<small>SILK OF ICELAND</small></div>
-        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk." data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
+    <div class="foot">
+      <div>
+        <div class="fm">LEYNI</div>
+        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk."
+           data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
       </div>
       <div>
         <h4 data-en="Shop" data-is="Verslun">Shop</h4>
         <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
-        <a href="index.html#men" data-en="Men · 55×55 (soon)" data-is="Karlar · 55×55 (bráðum)">Men · 55×55 (soon)</a>
+        <a href="index.html#men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</a>
       </div>
       <div>
-        <h4 data-en="House" data-is="Húsið">House</h4>
-        <a href="index.html#story" data-en="Story" data-is="Sagan">Story</a>
-        <a href="index.html#craft" data-en="Craft & certification" data-is="Handverk og vottun">Craft & certification</a>
+        <h4 data-en="Contact" data-is="Samband">Contact</h4>
         <a href="mailto:hello@leyni.is">hello@leyni.is</a>
+        <a href="index.html#story" data-en="About" data-is="Um Leyni">About</a>
       </div>
     </div>
     <div class="foot-bot">
-      <small>© 2026 Leyni · Silk of Iceland™</small>
-      <div class="foot-dots" id="footDots" aria-hidden="true"></div>
-      <small data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</small>
+      <span>© 2026 Leyni · Silk of Iceland™</span>
+      <span data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</span>
     </div>
   </div>
 </footer>
@@ -83,28 +82,12 @@
 <script src="app.js"></script>
 <script>
   function PAGE_RENDER(){
-    document.getElementById('footDots').innerHTML =
-      SCARVES.map(s=>`<i style="background:${s.color}" title="${s.name}"></i>`).join('');
     document.getElementById('shopCards').innerHTML = SCARVES.map(cardHTML).join('');
     document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
       document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
-      const f=b.dataset.filter;
-      // all nine are women's 88×88; men's not yet in catalogue
-      document.getElementById('shopCards').style.opacity = (f==='men')?'.35':'1';
+      document.getElementById('shopCards').style.opacity = (b.dataset.filter==='men')?'.35':'1';
     }));
-  }
-  function cardHTML(s){
-    return `<a class="card reveal in" style="--accent:${s.color}" href="product.html?s=${s.slug}">
-      <figure>
-        <img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}">
-        <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta við">Quick add</span>
-      </figure>
-      <div class="meta">
-        <div><div class="nm">${s.name}</div><div class="gl" data-en="${s.en}" data-is="${s.is}">${s.en}</div></div>
-        <div class="pr">${money(PRICE)}</div>
-      </div>
-    </a>`;
   }
   function PAGE_LANG(){ document.querySelectorAll('#shopCards .pr').forEach(el=>el.textContent=money(PRICE)); }
 </script>

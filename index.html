@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<header class="nav">
+<!-- ============ NAV (transparent over cover) ============ -->
+<header class="nav hero-nav">
   <div class="wrap nav-in">
     <div class="nav-l">
       <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -35,127 +35,119 @@
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="wrap hero-in">
-    <div class="hero-copy">
-      <div class="eyebrow" data-en="Mulberry silk · Designed in Iceland" data-is="Mulberry-silki · Hannað á Íslandi">Mulberry silk · Designed in Iceland</div>
-      <h1 class="serif"><span data-en="The colours of the" data-is="Litir íslensku">The colours of the</span> <em data-en="Icelandic night." data-is="næturinnar.">Icelandic night.</em></h1>
-      <p class="lead" data-en="Silk scarves woven from the finest mulberry silk — drawn from the deep, vibrant light of the long northern summer, where twilight lingers for hours." data-is="Silkislæður úr fínasta mulberry-silki — sóttar í djúpt, líflegt ljós langra íslenskra sumarnátta, þar sem rökkrið dvelur tímunum saman.">Silk scarves woven from the finest mulberry silk — drawn from the deep, vibrant light of the long northern summer, where twilight lingers for hours.</p>
-      <div class="dots" id="heroDots" aria-hidden="true"></div>
-      <a href="shop.html" class="btn" data-en="Explore the collection" data-is="Skoða slæðurnar">Explore the collection</a>
-    </div>
-    <figure class="hero-figure">
-      <img src="img/hero.jpg" alt="Model wearing a Leyni silk scarf against an Icelandic sunset" />
-      <figcaption class="hero-cap">Reykjanes · 66°N</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ============ STORY ============ -->
-<section class="story" id="story">
-  <div class="wrap story-grid">
-    <div class="reveal">
-      <div class="rule" style="--accent:#B22890"></div>
-      <div class="eyebrow" style="color:var(--ink-2)" data-en="The mystique of Leyni" data-is="Töfrar Leyni">The mystique of Leyni</div>
-      <h2 class="serif" style="--accent:#B22890" data-en="A quiet secret, hidden in silk." data-is="Leyndarmál, falið í silki.">A quiet secret, hidden in silk.</h2>
-    </div>
-    <div class="reveal">
-      <p data-en="Every Leyni scarf is designed by Icelandic artist Margrét Júlíana Sigurðardóttir. The patterns draw on Iceland’s rugged nature and the interplay of deep, vibrant colour found in the long northern summer nights." data-is="Sérhver Leyni-slæða er hönnuð af íslenska listamanninum Margréti Júlíönu Sigurðardóttur. Mynstrin sækja í hrjúfa náttúru Íslands og samspil djúpra, líflegra lita í löngum, björtum sumarnóttum.">Every Leyni scarf is designed by Icelandic artist Margrét Júlíana Sigurðardóttir. The patterns draw on Iceland’s rugged nature and the interplay of deep, vibrant colour found in the long northern summer nights.</p>
-      <p data-en="With a touch of playfulness and surprise, the Leyni experience becomes a magical journey into the unknown." data-is="Með ívafi af leik og óvæntum uppákomum verður upplifunin af Leyni töfrandi ferðalag inn í hið óþekkta.">With a touch of playfulness and surprise, the Leyni experience becomes a magical journey into the unknown.</p>
-      <div class="sign serif">Margrét Júlíana Sigurðardóttir</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FEATURED ============ -->
-<section id="featured">
-  <div class="wrap">
-    <div class="head reveal">
-      <div class="head-txt">
-        <div class="num">01 — 09</div>
-        <h2 class="serif" data-en="Nine designs, each named for Iceland." data-is="Níu mynstur, hvert nefnt eftir Íslandi.">Nine designs, each named for Iceland.</h2>
+<!-- ============ COVER — Manor-style full-bleed ============ -->
+<section class="cover">
+  <div class="bg"><img src="img/hero.jpg" alt="Model wearing a Leyni silk scarf against an Icelandic sunset" /></div>
+  <div class="wrap cover-in">
+    <h1 data-en="Silk of Iceland" data-is="Silki frá Íslandi">Silk of Iceland</h1>
+    <div class="cover-sub">
+      <p class="big" data-en="Nine silk scarves in the colours of the long northern summer night. Designed in Iceland by Margrét Júlíana Sigurðardóttir."
+         data-is="Níu silkislæður í litum langra norrænna sumarnátta. Hannaðar á Íslandi af Margréti Júlíönu Sigurðardóttur.">Nine silk scarves in the colours of the long northern summer night. Designed in Iceland by Margrét Júlíana Sigurðardóttir.</p>
+      <p class="small" data-en="Crafted from the finest mulberry silk. 88 × 88 cm."
+         data-is="Unnar úr fínasta mulberry-silki. 88 × 88 cm.">Crafted from the finest mulberry silk. 88 × 88 cm.</p>
+      <div class="cover-cta">
+        <a href="shop.html" class="btn" data-en="Shop the collection" data-is="Skoða slæðurnar">Shop the collection</a>
       </div>
-      <a class="link" href="shop.html" style="border-bottom:1px solid var(--ink);padding-bottom:4px" data-en="View all" data-is="Sjá allt">View all</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLLECTION ============ -->
+<section id="collection">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 data-en="The collection" data-is="Slæðurnar">The collection</h2>
+      <a href="shop.html" data-en="View all nine" data-is="Sjá allar níu">View all nine</a>
     </div>
     <div class="cards three reveal" id="featuredCards"></div>
   </div>
 </section>
 
-<!-- ============ CRAFT ============ -->
+<!-- ============ STORY — kynning slide layout ============ -->
+<section id="story" style="padding-top:0">
+  <div class="wrap story-grid">
+    <div class="story-txt reveal">
+      <h2 data-en="The mystique of Leyni" data-is="Töfrar Leyni">The mystique of Leyni</h2>
+      <p data-en="The scarves are designed by Icelandic artist Margrét Júlíana Sigurðardóttir."
+         data-is="Slæðurnar eru hannaðar af íslenska listamanninum Margréti Júlíönu Sigurðardóttur.">The scarves are designed by Icelandic artist Margrét Júlíana Sigurðardóttir.</p>
+      <p class="muted" data-en="The patterns draw inspiration from Iceland’s rugged nature and the interplay of deep and vibrant colours found in the long northern summer nights, where twilight can linger for hours."
+         data-is="Mynstrin sækja innblástur í hrjúfa náttúru Íslands og samspil djúpra og líflegra lita í löngum norrænum sumarnóttum, þar sem rökkrið getur dvalið tímunum saman.">The patterns draw inspiration from Iceland’s rugged nature and the interplay of deep and vibrant colours found in the long northern summer nights, where twilight can linger for hours.</p>
+      <p class="muted" data-en="Combined with a touch of playfulness and surprise, the Leyni experience becomes a magical journey into the unknown."
+         data-is="Með ívafi af leik og óvæntum uppákomum verður upplifunin af Leyni töfrandi ferðalag inn í hið óþekkta.">Combined with a touch of playfulness and surprise, the Leyni experience becomes a magical journey into the unknown.</p>
+      <div class="credit">Margrét Júlíana Sigurðardóttir</div>
+    </div>
+    <div class="story-fig reveal">
+      <figure><img loading="lazy" src="img/bleikadisin.jpg" alt="Bleika dísin — print detail" /></figure>
+      <figcaption data-en="Bleika dísin — print detail" data-is="Bleika dísin — nærmynd af mynstri">Bleika dísin — print detail</figcaption>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CRAFT — deck certification layout ============ -->
 <section class="craft" id="craft">
-  <div class="wrap">
-    <div class="head reveal" style="align-items:flex-start">
-      <div class="head-txt">
-        <div class="eyebrow" data-en="Craft & certification" data-is="Handverk og vottun">Craft & certification</div>
-        <h2 class="serif" style="margin-top:.4em" data-en="The world’s finest silk." data-is="Fínasta silki í heimi.">The world’s finest silk.</h2>
-      </div>
-      <div class="head-txt">
-        <p data-en="Leyni scarves are crafted from the finest mulberry silk and produced in Hangzhou, China — renowned for the world’s finest silk craftsmanship. All production meets certified quality standards." data-is="Leyni-slæður eru gerðar úr fínasta mulberry-silki og framleiddar í Hangzhou í Kína — þekkt fyrir fínasta silkihandverk í heimi. Öll framleiðsla uppfyllir vottaða gæðastaðla.">Leyni scarves are crafted from the finest mulberry silk and produced in Hangzhou, China — renowned for the world’s finest silk craftsmanship. All production meets certified quality standards.</p>
-      </div>
-    </div>
-    <div class="specs reveal">
-      <div class="spec"><div class="n"><i style="background:#D6645A"></i>100%</div><div class="l" data-en="Mulberry silk" data-is="Mulberry-silki">Mulberry silk</div></div>
-      <div class="spec"><div class="n"><i style="background:#4A7396"></i>88×88</div><div class="l" data-en="Centimetres" data-is="Sentímetrar">Centimetres</div></div>
-      <div class="spec"><div class="n"><i style="background:#B0774A"></i>9</div><div class="l" data-en="Signature designs" data-is="Einkennismynstur">Signature designs</div></div>
-      <div class="spec"><div class="n"><i style="background:#6E6BB2"></i>OEKO-TEX®</div><div class="l" data-en="Certified" data-is="Vottað">Certified</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MEN'S ============ -->
-<section class="men" id="men">
-  <div class="wrap men-in">
+  <div class="wrap craft-grid">
     <div class="reveal">
-      <div class="eyebrow" style="color:var(--ink-2)" data-en="Coming soon" data-is="Væntanlegt">Coming soon</div>
-      <h2 class="serif" style="margin-top:.4em" data-en="Rivers of Iceland — for men." data-is="Ár Íslands — fyrir karla.">Rivers of Iceland — for men.</h2>
-      <p data-en="A set of five smaller 55 × 55 cm scarves, named after four Icelandic rivers — and Hraunfljót, the Icelandic word for a river of running lava." data-is="Sett af fimm minni slæðum, 55 × 55 cm, nefndar eftir fjórum íslenskum ám — og Hraunfljóti, orðinu sem Íslendingar nota yfir rennandi hraun.">A set of five smaller 55 × 55 cm scarves, named after four Icelandic rivers — and Hraunfljót, the Icelandic word for a river of running lava.</p>
-      <div class="soon" data-en="55 × 55 cm · Available soon" data-is="55 × 55 cm · Væntanlegar">55 × 55 cm · Available soon</div>
+      <h2 data-en="Certification and sizes" data-is="Vottun og stærðir">Certification and sizes</h2>
+      <p data-en="Leyni scarves are crafted from the finest mulberry silk and produced in Hangzhou, China — renowned for the world’s finest silk craftsmanship. All production meets certified quality standards."
+         data-is="Leyni-slæður eru unnar úr fínasta mulberry-silki og framleiddar í Hangzhou í Kína — þekkt fyrir fínasta silkihandverk í heimi. Öll framleiðsla uppfyllir vottaða gæðastaðla.">Leyni scarves are crafted from the finest mulberry silk and produced in Hangzhou, China — renowned for the world’s finest silk craftsmanship. All production meets certified quality standards.</p>
+      <ul>
+        <li><span data-en="Material" data-is="Efni">Material</span><span data-en="100% mulberry silk" data-is="100% mulberry-silki">100% mulberry silk</span></li>
+        <li><span data-en="Size" data-is="Stærð">Size</span><span>88 × 88 cm</span></li>
+        <li><span data-en="Designs" data-is="Mynstur">Designs</span><span data-en="Nine" data-is="Níu">Nine</span></li>
+        <li><span data-en="Certification" data-is="Vottun">Certification</span><span>OEKO-TEX®</span></li>
+        <li><span data-en="Edges" data-is="Kantar">Edges</span><span data-en="Hand-rolled" data-is="Handrúllaðir">Hand-rolled</span></li>
+      </ul>
     </div>
-    <div class="rivers reveal">
-      <span>Skaftá</span><span>Öxará</span><span>Þjórsá</span><span>Hvítá</span><span>Hraunfljót</span>
+    <div class="oeko reveal" aria-hidden="true">
+      <div class="pad"></div>
+      <div class="band">OEKO-TEX®</div>
+      <div class="pad"></div>
     </div>
   </div>
 </section>
 
-<!-- ============ NEWSLETTER ============ -->
-<section class="news">
-  <div class="wrap reveal">
-    <div class="eyebrow" style="color:var(--ink-2)" data-en="Stay close" data-is="Vertu með">Stay close</div>
-    <h2 class="serif" data-en="Discover Leyni first." data-is="Kynnstu Leyni fyrst.">Discover Leyni first.</h2>
-    <p data-en="New designs, the men’s collection and private previews — straight to your inbox." data-is="Ný mynstur, karlalínan og forsýningar — beint í pósthólfið þitt.">New designs, the men’s collection and private previews — straight to your inbox.</p>
-    <form class="subscribe" onsubmit="this.reset();alert('Thank you — you’re on the list.');return false;">
-      <input type="email" required placeholder="you@email.com" aria-label="Email" />
-      <button type="submit" data-en="Join" data-is="Skrá">Join</button>
-    </form>
+<!-- ============ COMING SOON — Manor quote ============ -->
+<section class="soon-block" id="men" style="padding:16vh 0">
+  <div class="bg"><img src="img/2021.jpg" alt="" /></div>
+  <div class="wrap">
+    <h2 data-en="Coming soon" data-is="Væntanlegt">Coming soon</h2>
+    <div class="soon-cols">
+      <p class="big" data-en="Introducing our first collection for men. Five scarves named after the rivers of Iceland — Skaftá, Öxará, Þjórsá, Hvítá and Hraunfljót."
+         data-is="Fyrsta lína okkar fyrir karla. Fimm slæður nefndar eftir ám Íslands — Skaftá, Öxará, Þjórsá, Hvítá og Hraunfljóti.">Introducing our first collection for men. Five scarves named after the rivers of Iceland — Skaftá, Öxará, Þjórsá, Hvítá and Hraunfljót.</p>
+      <p class="small" data-en="Sign up with your email to be notified of the release."
+         data-is="Skráðu netfangið þitt og fáðu tilkynningu þegar línan kemur út.">Sign up with your email to be notified of the release.</p>
+      <form class="signup" onsubmit="this.reset();alert('Thank you — you’re on the list.');return false;">
+        <input type="email" required placeholder="Email address" aria-label="Email" />
+        <button type="submit" data-en="Sign up" data-is="Skrá">Sign up</button>
+      </form>
+      <p class="rivers-line">55 × 55 cm · Skaftá · Öxará · Þjórsá · Hvítá · Hraunfljót</p>
+    </div>
   </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <div class="wordmark">LEYNI<small>SILK OF ICELAND</small></div>
-        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk." data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
+    <div class="foot">
+      <div>
+        <div class="fm">LEYNI</div>
+        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk."
+           data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
       </div>
       <div>
         <h4 data-en="Shop" data-is="Verslun">Shop</h4>
         <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
-        <a href="shop.html" data-en="Women · 88×88" data-is="Konur · 88×88">Women · 88×88</a>
-        <a href="#men" data-en="Men · 55×55 (soon)" data-is="Karlar · 55×55 (bráðum)">Men · 55×55 (soon)</a>
+        <a href="#men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</a>
       </div>
       <div>
-        <h4 data-en="House" data-is="Húsið">House</h4>
-        <a href="#story" data-en="Story" data-is="Sagan">Story</a>
-        <a href="#craft" data-en="Craft & certification" data-is="Handverk og vottun">Craft & certification</a>
+        <h4 data-en="Contact" data-is="Samband">Contact</h4>
         <a href="mailto:hello@leyni.is">hello@leyni.is</a>
+        <a href="#story" data-en="About" data-is="Um Leyni">About</a>
       </div>
     </div>
     <div class="foot-bot">
-      <small>© 2026 Leyni · Silk of Iceland™</small>
-      <div class="foot-dots" id="footDots" aria-hidden="true"></div>
-      <small data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</small>
+      <span>© 2026 Leyni · Silk of Iceland™</span>
+      <span data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</span>
     </div>
   </div>
 </footer>
@@ -163,27 +155,10 @@
 <script src="app.js"></script>
 <script>
   function PAGE_RENDER(){
-    // colour-dots motif (the scarves' own colours)
-    const dots = SCARVES.map(s=>`<i style="background:${s.color}" title="${s.name}"></i>`).join('');
-    const hd=document.getElementById('heroDots'); if(hd) hd.innerHTML=dots;
-    const fd=document.getElementById('footDots'); if(fd) fd.innerHTML=dots;
-    // featured cards
-    const feat=['bleikadisin','raudisandur','snaefellsjokull'].map(bySlug);
-    document.getElementById('featuredCards').innerHTML=feat.map(s=>cardHTML(s)).join('');
+    const feat=['raudisandur','bleikadisin','snaefellsjokull','forsetinn','koniaksstofan','juli'].map(bySlug);
+    document.getElementById('featuredCards').innerHTML=feat.map(cardHTML).join('');
   }
-  function cardHTML(s){
-    return `<a class="card" style="--accent:${s.color}" href="product.html?s=${s.slug}">
-      <figure>
-        <img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}">
-        <span class="quick" onclick="event.preventDefault();addToCart('${s.slug}')" data-en="Quick add" data-is="Bæta við">Quick add</span>
-      </figure>
-      <div class="meta">
-        <div><div class="nm">${s.name}</div><div class="gl" data-en="${s.en}" data-is="${s.is}">${s.en}</div></div>
-        <div class="pr">${money(PRICE)}</div>
-      </div>
-    </a>`;
-  }
-  function PAGE_LANG(){ // re-render money/labels in featured on lang switch
+  function PAGE_LANG(){
     document.querySelectorAll('#featuredCards .pr').forEach(el=>el.textContent=money(PRICE));
   }
 </script>

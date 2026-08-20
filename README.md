@@ -2,7 +2,7 @@
 
 Storefront for **Leyni**, a mulberry-silk scarf label designed in Iceland.
 
-Stark black-and-white editorial design with **playful pops of colour sampled from each scarf** — every design has its own signature colour used on its name, its add-to-bag button, and a 9-dot "collection" motif.
+Cold-white photographic minimalism modelled on the Squarespace **Manor** template, typeset in **Gill Sans** (matching the Kynning 2026 deck; Hanken Grotesk fallback). Colour appears only as small per-scarf swatch chips sampled from the artwork.
 
 ## Pages
 
