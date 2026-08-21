@@ -22,7 +22,7 @@ const SCARVES = [
     storyEn:'A muse in magenta — playful, luminous and impossible to overlook.',
     storyIs:'Dís í blómableiku — leikandi, ljómandi og ómögulegt að líta framhjá.' },
   { slug:'snaefellsjokull',name:'Snæfellsjökull',color:'#6E6BB2',
-    en:'The Glacier', is:'Snæfellsjökull',
+    en:'The Snæfellsjökull Glacier', is:'Snæfellsjökull',
     storyEn:'The glacier at the edge of the world, periwinkle light resting on ancient ice.',
     storyIs:'Jökullinn á heimsenda — bláfjólublátt ljós hvílir á aldagömlum ís.' },
   { slug:'koniaksstofan', name:'Koníaksstofan', color:'#B0774A',

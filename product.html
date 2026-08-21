@@ -106,7 +106,7 @@
     document.getElementById('thumbs').innerHTML=imgs.map((src,k)=>
       `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join('');
     const gloss = (l==='en'?s.en:s.is);
-    const glossLine = gloss && gloss!==s.name ? ` — (${gloss.toUpperCase()})` : '';
+    const glossLine = gloss && gloss!==s.name ? ` — <b>(${gloss.toUpperCase()})</b>` : '';
     const no = String(SCARVES.indexOf(s)+1).padStart(2,'0');
     document.getElementById('pdpInfo').innerHTML=`
       <span class="lbl" style="display:block;margin-bottom:1.6em">№ ${no}${glossLine}</span>
