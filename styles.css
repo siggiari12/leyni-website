@@ -70,9 +70,10 @@ h1 em,h2 em{font-style:italic}
 .lang button{opacity:.45;transition:opacity .2s;font-weight:500}
 .lang button.active{opacity:1}
 .lang .sep{opacity:.3}
-.bag{font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;display:flex;gap:6px;align-items:center}
-.bag .count::before{content:"("}
-.bag .count::after{content:")"}
+.bag{font-size:.68rem;font-weight:500;letter-spacing:.12em;display:flex;gap:7px;align-items:center}
+.bag:hover{opacity:.55}
+.bag .bag-ico{display:block}
+.bag .count{min-width:1em;text-align:left}
 .menu-btn{display:none}
 .mobile-menu{display:none}
 
