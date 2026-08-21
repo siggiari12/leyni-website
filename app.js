@@ -44,6 +44,27 @@ const SCARVES = [
 ];
 const bySlug = s => SCARVES.find(x=>x.slug===s);
 
+/* ---------- Men / Unisex — Rivers of Iceland (coming soon) ---------- */
+const RIVERS = [
+  { slug:'river-skafta',     name:'Skaftá',     en:'River at Skaftafell', is:'Áin við Skaftafell' },
+  { slug:'river-oxara',      name:'Öxará',      en:'River at Þingvellir', is:'Áin á Þingvöllum' },
+  { slug:'river-thjorsa',    name:'Þjórsá',     en:'The Highland River',  is:'Hálendisfljótið' },
+  { slug:'river-hvita',      name:'Hvítá',      en:'River of Gullfoss',   is:'Áin við Gullfoss' },
+  { slug:'river-hraunfljot', name:'Hraunfljót', en:'A River of Lava',     is:'Rennandi hraun' }
+];
+function riverCardHTML(s, i){
+  const no = String(i+1).padStart(2,'0');
+  return `<div class="card">
+    <div class="idx">M ${no}</div>
+    <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni — ${s.name}"></figure>
+    <div class="meta">
+      <div class="nm">${s.name}</div>
+      <div class="sub-lbl"><b class="gl" data-en="(${s.en})" data-is="(${s.is})">(${s.en})</b><span class="soon-tag" data-en="Coming soon · 55 × 55" data-is="Væntanlegt · 55 × 55">Coming soon · 55 × 55</span></div>
+      <a class="ulink river-pre" href="index.html#men" data-en="Preorder" data-is="Forpanta">Preorder</a>
+    </div>
+  </div>`;
+}
+
 /* ---------- i18n ---------- */
 const T = {
   bag:{en:'Bag',is:'Karfa'},

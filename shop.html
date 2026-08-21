@@ -44,7 +44,7 @@
   <div class="filters">
     <button class="active" data-filter="all" data-en="All" data-is="Allt">All</button>
     <button data-filter="women" data-en="Women" data-is="Konur">Women</button>
-    <button data-filter="men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</button>
+    <button data-filter="men" data-en="Men / Unisex — coming soon" data-is="Karlar / Unisex — væntanlegt">Men / Unisex — coming soon</button>
   </div>
 </div>
 
@@ -65,7 +65,7 @@
       <div>
         <h4 data-en="Shop" data-is="Verslun">Shop</h4>
         <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
-        <a href="index.html#men" data-en="Men — coming soon" data-is="Karlar — væntanlegt">Men — coming soon</a>
+        <a href="index.html#men" data-en="Men / Unisex — coming soon" data-is="Karlar / Unisex — væntanlegt">Men / Unisex — coming soon</a>
       </div>
       <div>
         <h4 data-en="Contact" data-is="Samband">Contact</h4>
@@ -82,12 +82,19 @@
 
 <script src="app.js?v=5"></script>
 <script>
+  function renderGrid(f){
+    let html='';
+    if(f!=='men')   html += SCARVES.map((s,i)=>cardHTML(s,i)).join('');
+    if(f!=='women') html += RIVERS.map((s,i)=>riverCardHTML(s,i)).join('');
+    document.getElementById('shopCards').innerHTML = html;
+    applyLang(lang());
+  }
   function PAGE_RENDER(){
-    document.getElementById('shopCards').innerHTML = SCARVES.map(cardHTML).join('');
+    renderGrid('all');
     document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
       document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
-      document.getElementById('shopCards').style.opacity = (b.dataset.filter==='men')?'.35':'1';
+      renderGrid(b.dataset.filter);
     }));
   }
   function PAGE_LANG(){ document.querySelectorAll('#shopCards .pr').forEach(el=>el.textContent=money(PRICE)); }
