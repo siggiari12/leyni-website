@@ -44,25 +44,102 @@ const SCARVES = [
 ];
 const bySlug = s => SCARVES.find(x=>x.slug===s);
 
-/* ---------- Men / Unisex — Rivers of Iceland (coming soon) ---------- */
+/* ---------- Men / Unisex — Rivers of Iceland (preorder, ships fall 2026) ---------- */
+const PREORDER_EMAIL = 'hello@leyni.com';
 const RIVERS = [
-  { slug:'river-skafta',     name:'Skaftá',     en:'River at Skaftafell', is:'Áin við Skaftafell' },
-  { slug:'river-oxara',      name:'Öxará',      en:'River at Þingvellir', is:'Áin á Þingvöllum' },
-  { slug:'river-thjorsa',    name:'Þjórsá',     en:'The Highland River',  is:'Hálendisfljótið' },
-  { slug:'river-hvita',      name:'Hvítá',      en:'River of Gullfoss',   is:'Áin við Gullfoss' },
-  { slug:'river-hraunfljot', name:'Hraunfljót', en:'A River of Lava',     is:'Rennandi hraun' }
+  { slug:'river-skafta',     name:'Skaftá',     en:'River at Skaftafell', is:'Áin við Skaftafell',
+    storyEn:'Glacial water winding through black sand beneath Skaftafell — cold, patient, unhurried.',
+    storyIs:'Jökulvatn sem liðast um svartan sand undir Skaftafelli — kalt, þolinmótt, óðagotslaust.' },
+  { slug:'river-oxara',      name:'Öxará',      en:'River at Þingvellir', is:'Áin á Þingvöllum',
+    storyEn:'The river that falls into the rift at Þingvellir, where the continents drift apart.',
+    storyIs:'Áin sem fellur í gjána á Þingvöllum, þar sem heimsálfurnar reka í sundur.' },
+  { slug:'river-thjorsa',    name:'Þjórsá',     en:'The Highland River',  is:'Hálendisfljótið',
+    storyEn:'Iceland’s longest river, carrying the highlands down to the sea.',
+    storyIs:'Lengsta á Íslands, ber hálendið til sjávar.' },
+  { slug:'river-hvita',      name:'Hvítá',      en:'River of Gullfoss',   is:'Áin við Gullfoss',
+    storyEn:'The white river that hurls itself over Gullfoss in a veil of spray.',
+    storyIs:'Hvíta áin sem steypist fram af Gullfossi í úðaslæðu.' },
+  { slug:'river-hraunfljot', name:'Hraunfljót', en:'A River of Lava',     is:'Rennandi hraun',
+    storyEn:'Not water at all — a river of running lava, glowing as it goes.',
+    storyIs:'Alls ekki vatn — fljót úr rennandi hrauni, glóandi á leið sinni.' }
 ];
+const riverBySlug = s => RIVERS.find(x=>x.slug===s);
 function riverCardHTML(s, i){
   const no = String(i+1).padStart(2,'0');
-  return `<div class="card">
+  return `<a class="card" href="product.html?s=${s.slug}">
     <div class="idx">M ${no}</div>
     <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni — ${s.name}"></figure>
     <div class="meta">
       <div class="nm">${s.name}</div>
-      <div class="sub-lbl"><b class="gl" data-en="(${s.en})" data-is="(${s.is})">(${s.en})</b><span class="soon-tag" data-en="Coming soon · 55 × 55" data-is="Væntanlegt · 55 × 55">Coming soon · 55 × 55</span></div>
-      <a class="ulink river-pre" href="index.html#men" data-en="Preorder" data-is="Forpanta">Preorder</a>
+      <div class="sub-lbl"><span class="gl" data-en="(${s.en})" data-is="(${s.is})">(${s.en})</span><span class="soon-tag" data-en="Ships fall 2026" data-is="Kemur haustið 2026">Ships fall 2026</span></div>
+      <span class="ulink river-pre" onclick="event.preventDefault();openPreorder('${s.slug}')" data-en="Preorder" data-is="Forpanta">Preorder</span>
     </div>
-  </div>`;
+  </a>`;
+}
+
+/* ---------- Preorder reservation modal (B — email, no payment) ---------- */
+let PRE_QTY = 1, PRE_CUR = null;
+function injectPreorder(){
+  const el=document.createElement('div');
+  el.innerHTML=`
+    <div class="scrim" id="preScrim" onclick="closePreorder()"></div>
+    <aside class="pre-modal" id="preModal" role="dialog" aria-label="Preorder">
+      <button class="x" onclick="closePreorder()" aria-label="Close">✕</button>
+      <figure><img id="preImg" src="" alt="" /></figure>
+      <div class="pre-info">
+        <span class="lbl" data-en="Preorder · Ships fall 2026 · 55 × 55 cm (one size only)" data-is="Forpöntun · Kemur haustið 2026 · 55 × 55 cm (ein stærð)">Preorder · Ships fall 2026 · 55 × 55 cm (one size only)</span>
+        <h3 id="preName"></h3>
+        <p class="pre-gl lbl" id="preGloss"></p>
+        <p class="pre-txt" data-en="No payment now. Your email client opens with the reservation prepared — send it, and we will reserve yours and contact you at release."
+           data-is="Engin greiðsla núna. Tölvupósturinn þinn opnast með pöntunina tilbúna — sendu hann og við tökum eintakið þitt frá og höfum samband við útgáfu.">No payment now. Your email client opens with the reservation prepared — send it, and we will reserve yours and contact you at release.</p>
+        <div class="opt">
+          <div class="lbl" data-en="Quantity" data-is="Fjöldi">Quantity</div>
+          <div class="qty">
+            <button onclick="preBump(-1)" aria-label="Minus">−</button>
+            <span id="preQtyVal">1</span>
+            <button onclick="preBump(1)" aria-label="Plus">+</button>
+          </div>
+        </div>
+        <a class="btn dark block" id="preMailto" href="#" data-en="Reserve by email" data-is="Panta með tölvupósti">Reserve by email</a>
+      </div>
+    </aside>`;
+  document.body.appendChild(el);
+}
+function preMailtoHref(){
+  const s=PRE_CUR, l=lang();
+  const subject=`Preorder — ${s.name} (55×55)`;
+  const body=[
+    `Design: ${s.name} (${s.en})`,
+    `Size: 55 × 55 cm (one size only)`,
+    `Quantity: ${PRE_QTY}`,
+    `Ships: Fall 2026`,
+    ``,
+    `Name:`,
+    `Shipping address:`
+  ].join('\n');
+  return `mailto:${PREORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+function openPreorder(slug){
+  PRE_CUR=riverBySlug(slug); if(!PRE_CUR) return;
+  PRE_QTY=1;
+  const l=lang();
+  document.getElementById('preImg').src=`img/${PRE_CUR.slug}.jpg`;
+  document.getElementById('preImg').alt=`Leyni — ${PRE_CUR.name}`;
+  document.getElementById('preName').textContent=PRE_CUR.name;
+  document.getElementById('preGloss').textContent=`(${(l==='en'?PRE_CUR.en:PRE_CUR.is).toUpperCase()})`;
+  document.getElementById('preQtyVal').textContent='1';
+  document.getElementById('preMailto').href=preMailtoHref();
+  document.getElementById('preScrim').classList.add('open');
+  document.getElementById('preModal').classList.add('open');
+}
+function preBump(d){
+  PRE_QTY=Math.max(1,PRE_QTY+d);
+  document.getElementById('preQtyVal').textContent=PRE_QTY;
+  document.getElementById('preMailto').href=preMailtoHref();
+}
+function closePreorder(){
+  document.getElementById('preScrim')?.classList.remove('open');
+  document.getElementById('preModal')?.classList.remove('open');
 }
 
 /* ---------- i18n ---------- */
@@ -194,6 +271,7 @@ function initNav(){
 /* ---------- Boot ---------- */
 document.addEventListener('DOMContentLoaded',()=>{
   injectDrawer();
+  injectPreorder();
   initNav();
   if(typeof PAGE_RENDER==='function') PAGE_RENDER();
   applyLang(lang());

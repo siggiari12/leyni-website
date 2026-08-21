@@ -85,17 +85,25 @@
 
 <script src="app.js?v=5"></script>
 <script>
-  let CUR=null, QTY=1;
+  let CUR=null, QTY=1, IS_RIVER=false;
   function currentSlug(){
     const p=new URLSearchParams(location.search).get('s');
-    return bySlug(p)?p:'raudisandur';
+    return (bySlug(p)||riverBySlug(p))?p:'raudisandur';
   }
   function PAGE_RENDER(){
-    CUR=bySlug(currentSlug());
+    const slug=currentSlug();
+    CUR=bySlug(slug)||riverBySlug(slug);
+    IS_RIVER=!!riverBySlug(slug);
     renderPDP();
-    const i=SCARVES.indexOf(CUR);
-    const rel=[1,2,3].map(k=>SCARVES[(i+k)%SCARVES.length]);
-    document.getElementById('related').innerHTML=rel.map(s=>cardHTML(s,SCARVES.indexOf(s))).join('');
+    if(IS_RIVER){
+      const i=RIVERS.indexOf(CUR);
+      const rel=[1,2,3].map(k=>RIVERS[(i+k)%RIVERS.length]);
+      document.getElementById('related').innerHTML=rel.map(s=>riverCardHTML(s,RIVERS.indexOf(s))).join('');
+    }else{
+      const i=SCARVES.indexOf(CUR);
+      const rel=[1,2,3].map(k=>SCARVES[(i+k)%SCARVES.length]);
+      document.getElementById('related').innerHTML=rel.map(s=>cardHTML(s,SCARVES.indexOf(s))).join('');
+    }
   }
   function renderPDP(){
     const s=CUR, l=lang();
@@ -107,17 +115,13 @@
       `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join('');
     const gloss = (l==='en'?s.en:s.is);
     const glossLine = gloss && gloss!==s.name ? ` — (${gloss.toUpperCase()})` : '';
-    const no = String(SCARVES.indexOf(s)+1).padStart(2,'0');
-    document.getElementById('pdpInfo').innerHTML=`
-      <span class="lbl" style="display:block;margin-bottom:1.6em">№ ${no}${glossLine}</span>
-      <h1>${s.name}</h1>
-      <div class="price">${money(PRICE)}</div>
-      <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
-
-      <div class="opt">
-        <div class="lbl" data-en="Size" data-is="Stærð">Size</div>
-        <div class="vals"><span class="on">88 × 88 cm</span></div>
-      </div>
+    const no = IS_RIVER ? 'M '+String(RIVERS.indexOf(s)+1).padStart(2,'0')
+                        : String(SCARVES.indexOf(s)+1).padStart(2,'0');
+    const size = IS_RIVER ? '55 × 55 cm' : '88 × 88 cm';
+    const priceLine = IS_RIVER
+      ? `<div class="price">${l==='en'?'Preorder · Ships fall 2026':'Forpöntun · Kemur haustið 2026'}</div>`
+      : `<div class="price">${money(PRICE)}</div>`;
+    const qtyBlock = IS_RIVER ? '' : `
       <div class="opt">
         <div class="lbl" data-en="Quantity" data-is="Fjöldi">Quantity</div>
         <div class="qty">
@@ -125,11 +129,23 @@
           <span id="qtyVal">1</span>
           <button onclick="bump(1)" aria-label="Plus">+</button>
         </div>
-      </div>
-      <div class="add-row">
-        <button class="btn dark block" onclick="addToCart('${s.slug}',QTY)"
-          data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>
-      </div>
+      </div>`;
+    const cta = IS_RIVER
+      ? `<button class="btn dark block" onclick="openPreorder('${s.slug}')"
+          data-en="Preorder by email" data-is="Panta með tölvupósti">Preorder by email</button>`
+      : `<button class="btn dark block" onclick="addToCart('${s.slug}',QTY)"
+          data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>`;
+    document.getElementById('pdpInfo').innerHTML=`
+      <span class="lbl" style="display:block;margin-bottom:1.6em">№ ${no}${glossLine}</span>
+      <h1>${s.name}</h1>
+      ${priceLine}
+      <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
+
+      <div class="opt">
+        <div class="lbl" data-en="Size (one size only)" data-is="Stærð (ein stærð)">Size (one size only)</div>
+        <div class="vals"><span class="on">${size}</span></div>
+      </div>${qtyBlock}
+      <div class="add-row">${cta}</div>
 
       <div class="acc">
         <details open>
@@ -139,8 +155,8 @@
         </details>
         <details>
           <summary><span data-en="Size & dimensions" data-is="Stærð og mál">Size & dimensions</span><span class="pl">+</span></summary>
-          <div class="body" data-en="Traditional square, 88 × 88 cm. Designed to knot, drape at the neck, or wear in the hair."
-               data-is="Hefðbundinn ferningur, 88 × 88 cm. Hönnuð til að hnýta, sveipa um hálsinn eða bera í hárinu.">Traditional square, 88 × 88 cm. Designed to knot, drape at the neck, or wear in the hair.</div>
+          <div class="body" data-en="Traditional square, ${size} (one size only). Designed to knot, drape at the neck, or wear in the hair."
+               data-is="Hefðbundinn ferningur, ${size} (ein stærð). Hönnuð til að hnýta, sveipa um hálsinn eða bera í hárinu.">Traditional square, ${size} (one size only). Designed to knot, drape at the neck, or wear in the hair.</div>
         </details>
         <details>
           <summary><span data-en="Certification" data-is="Vottun">Certification</span><span class="pl">+</span></summary>
