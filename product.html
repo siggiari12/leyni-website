@@ -50,7 +50,7 @@
   <section style="padding:120px 0 0">
     <div class="sec-head">
       <h2 data-en="More from the collection" data-is="Fleiri úr línunni">More from the collection</h2>
-      <a class="ulink" href="shop.html" data-en="All nine" data-is="Allar níu">All nine</a>
+      <a class="ulink" href="shop.html" data-en="See all" data-is="Sjá allt">See all</a>
     </div>
     <div class="cards three" id="related"></div>
   </section>
@@ -107,7 +107,7 @@
   }
   function renderPDP(){
     const s=CUR, l=lang();
-    document.getElementById('crumbName').textContent=s.name;
+    document.getElementById('crumbName').textContent=dispName(s,lang());
     const imgs=[`img/${s.slug}.jpg`];
     document.getElementById('mainImg').src=imgs[0];
     document.getElementById('mainImg').alt=`Leyni — ${s.name}`;
@@ -115,12 +115,13 @@
       `<button class="${k===0?'active':''}" onclick="setMain('${src}',this)"><img src="${src}" alt=""></button>`).join('');
     const gloss = (l==='en'?s.en:s.is);
     const glossLine = gloss && gloss!==s.name ? ` — (${gloss.toUpperCase()})` : '';
-    const no = IS_RIVER ? 'M '+String(RIVERS.indexOf(s)+1).padStart(2,'0')
+    const no = IS_RIVER ? String(RIVERS.indexOf(s)+10)
                         : String(SCARVES.indexOf(s)+1).padStart(2,'0');
     const size = IS_RIVER ? '55 × 55 cm' : '88 × 88 cm';
     const priceLine = IS_RIVER
       ? `<div class="price">${l==='en'?'Preorder · Ships fall 2026':'Forpöntun · Kemur haustið 2026'}</div>`
-      : `<div class="price">${money(PRICE)}</div>`;
+      : `<div class="price">${priceHTML()}</div>
+         <div class="promo-lbl" data-en="Limited offer −30%" data-is="Kynningartilboð −30%">Limited offer −30%</div>`;
     const qtyBlock = IS_RIVER ? '' : `
       <div class="opt">
         <div class="lbl" data-en="Quantity" data-is="Fjöldi">Quantity</div>
@@ -137,12 +138,12 @@
           data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>`;
     document.getElementById('pdpInfo').innerHTML=`
       <span class="lbl" style="display:block;margin-bottom:1.6em">№ ${no}${glossLine}</span>
-      <h1>${s.name}</h1>
+      <h1>${dispName(s,l)}</h1>
       ${priceLine}
       <p class="desc">${l==='en'?s.storyEn:s.storyIs}</p>
 
       <div class="opt">
-        <div class="lbl" data-en="Size (one size only)" data-is="Stærð (ein stærð)">Size (one size only)</div>
+        <div class="lbl" data-en="Size" data-is="Stærð">Size</div>
         <div class="vals"><span class="on">${size}</span></div>
       </div>${qtyBlock}
       <div class="add-row">${cta}</div>
@@ -155,8 +156,8 @@
         </details>
         <details>
           <summary><span data-en="Size & dimensions" data-is="Stærð og mál">Size & dimensions</span><span class="pl">+</span></summary>
-          <div class="body" data-en="Traditional square, ${size} (one size only). Designed to knot, drape at the neck, or wear in the hair."
-               data-is="Hefðbundinn ferningur, ${size} (ein stærð). Hönnuð til að hnýta, sveipa um hálsinn eða bera í hárinu.">Traditional square, ${size} (one size only). Designed to knot, drape at the neck, or wear in the hair.</div>
+          <div class="body" data-en="Traditional square, ${size}. Designed to knot, drape at the neck, or wear in the hair."
+               data-is="Hefðbundinn ferningur, ${size}. Hönnuð til að hnýta, sveipa um hálsinn eða bera í hárinu.">Traditional square, ${size}. Designed to knot, drape at the neck, or wear in the hair.</div>
         </details>
         <details>
           <summary><span data-en="Certification" data-is="Vottun">Certification</span><span class="pl">+</span></summary>
@@ -169,7 +170,7 @@
                data-is="Pakkað í einkennisumbúðir. Sending um allan heim. 14 daga skilaréttur á ónotuðum vörum.">Wrapped in signature packaging. Worldwide shipping. 14-day returns on unworn pieces.</div>
         </details>
       </div>`;
-    document.title = `${s.name} — LEYNI`;
+    document.title = `${dispName(s,lang())} — LEYNI`;
     QTY=1;
   }
   function setMain(src,btn){
@@ -178,7 +179,7 @@
     btn.classList.add('active');
   }
   function bump(d){ QTY=Math.max(1,QTY+d); document.getElementById('qtyVal').textContent=QTY; }
-  function PAGE_LANG(){ renderPDP(); document.querySelectorAll('#related .pr').forEach(el=>el.textContent=money(PRICE)); }
+  function PAGE_LANG(){ renderPDP(); document.querySelectorAll('#related .pr').forEach(el=>el.innerHTML=priceHTML()); }
 </script>
 </body>
 </html>

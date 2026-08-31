@@ -3,7 +3,9 @@
    ============================================================ */
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
-const PRICE = 26900; // ISK — placeholder
+const PRICE_FULL = 18200;            // ISK
+const PRICE = 12740;                 // introductory -30% (limited)
+const priceHTML = () => `<s>${money(PRICE_FULL)}</s> ${money(PRICE)}`;
 const SCARVES = [
   { slug:'raudisandur',   name:'Rauðisandur',   color:'#D6645A',
     en:'Red Sand Beach', is:'Rauðisandur',
@@ -13,61 +15,65 @@ const SCARVES = [
     en:'Birch Glade', is:'Birkilaut',
     storyEn:'A sheltered hollow of birch, steel-blue dusk settling quietly between the leaves.',
     storyIs:'Skýlt birkilaut þar sem stálblátt rökkrið sest hljóðlega milli laufanna.' },
+  { slug:'2021',          name:'2021',          color:'#3B4E8C',
+    nEn:'2021 — Year of the Volcanic Eruption', nIs:'2021 — Árið sem gaus',
+    en:'', is:'',
+    storyEn:'A year kept in silk — the quiet blues of a season that lingered.',
+    storyIs:'Ár varðveitt í silki — kyrrlátir bláir tónar árstíðar sem dvaldi.' },
   { slug:'forsetinn',     name:'Forsetinn',     color:'#B96D80',
     en:'The President', is:'Forsetinn',
     storyEn:'Composed and ceremonial — a dusk-rose motif carried with a diplomat’s poise.',
     storyIs:'Yfirvegað og hátíðlegt — rökkurbleikt mynstur borið fram með ró sendiherrans.' },
-  { slug:'bleikadisin',   name:'Bleika dísin',  color:'#B22890',
-    en:'The Pink Muse', is:'Bleika dísin',
-    storyEn:'A muse in magenta — playful, luminous and impossible to overlook.',
-    storyIs:'Dís í blómableiku — leikandi, ljómandi og ómögulegt að líta framhjá.' },
-  { slug:'snaefellsjokull',name:'Snæfellsjökull',color:'#6E6BB2',
-    en:'The Snæfellsjökull Glacier', is:'Snæfellsjökull',
-    storyEn:'The glacier at the edge of the world, periwinkle light resting on ancient ice.',
-    storyIs:'Jökullinn á heimsenda — bláfjólublátt ljós hvílir á aldagömlum ís.' },
-  { slug:'koniaksstofan', name:'Koníaksstofan', color:'#B0774A',
-    en:'The Cognac Room', is:'Koníaksstofan',
-    storyEn:'Warm cognac light and unhurried conversation, held within squares of silk.',
-    storyIs:'Hlýtt koníaksljós og áhyggjulaust samtal, fangað í ferningum úr silki.' },
   { slug:'katem',         name:'Kate M',        color:'#C24E6B',
     en:'', is:'',
     storyEn:'A portrait in crimson and rose — bold, warm and unmistakably herself.',
     storyIs:'Andlitsmynd í djúprauðu og rósrauðu — djörf, hlý og ómótstæðilega hún sjálf.' },
+  { slug:'snaefellsjokull',name:'Snæfellsjökull',color:'#6E6BB2',
+    en:'The Snæfellsjökull Glacier', is:'Snæfellsjökull',
+    storyEn:'The glacier at the edge of the world, periwinkle light resting on ancient ice.',
+    storyIs:'Jökullinn á heimsenda — bláfjólublátt ljós hvílir á aldagömlum ís.' },
+  { slug:'bleikadisin',   name:'Bleika dísin',  color:'#B22890',
+    en:'The Pink Muse', is:'Bleika dísin',
+    storyEn:'A muse in magenta — playful, luminous and impossible to overlook.',
+    storyIs:'Dís í blómableiku — leikandi, ljómandi og ómögulegt að líta framhjá.' },
+  { slug:'koniaksstofan', name:'Koníaksstofan', color:'#B0774A',
+    en:'The Cognac Room', is:'Koníaksstofan',
+    storyEn:'Warm cognac light and unhurried conversation, held within squares of silk.',
+    storyIs:'Hlýtt koníaksljós og áhyggjulaust samtal, fangað í ferningum úr silki.' },
   { slug:'juli',          name:'Júlí',          color:'#E2726F',
     en:'July', is:'Júlí',
     storyEn:'The warmth of high summer — coral and rose beneath a midnight sun.',
-    storyIs:'Hlýja hásumars — kórall og rós undir miðnætursól.' },
-  { slug:'2021',          name:'2021',          color:'#3B4E8C',
-    en:'', is:'',
-    storyEn:'A year kept in silk — the quiet blues of a season that lingered.',
-    storyIs:'Ár varðveitt í silki — kyrrlátir bláir tónar árstíðar sem dvaldi.' }
+    storyIs:'Hlýja hásumars — kórall og rós undir miðnætursól.' }
 ];
+
 const bySlug = s => SCARVES.find(x=>x.slug===s);
+const dispName = (s,l) => l==='is' ? (s.nIs||s.name) : (s.nEn||s.name);
 
 /* ---------- Men / Unisex — Rivers of Iceland (preorder, ships fall 2026) ---------- */
 const PREORDER_EMAIL = 'hello@leyni.com';
 const RIVERS = [
-  { slug:'river-skafta',     name:'Skaftá',     en:'River at Skaftafell', is:'Áin við Skaftafell',
-    storyEn:'Glacial water winding through black sand beneath Skaftafell — cold, patient, unhurried.',
-    storyIs:'Jökulvatn sem liðast um svartan sand undir Skaftafelli — kalt, þolinmótt, óðagotslaust.' },
-  { slug:'river-oxara',      name:'Öxará',      en:'River at Þingvellir', is:'Áin á Þingvöllum',
-    storyEn:'The river that falls into the rift at Þingvellir, where the continents drift apart.',
-    storyIs:'Áin sem fellur í gjána á Þingvöllum, þar sem heimsálfurnar reka í sundur.' },
-  { slug:'river-thjorsa',    name:'Þjórsá',     en:'The Highland River',  is:'Hálendisfljótið',
-    storyEn:'Iceland’s longest river, carrying the highlands down to the sea.',
-    storyIs:'Lengsta á Íslands, ber hálendið til sjávar.' },
-  { slug:'river-hvita',      name:'Hvítá',      en:'River of Gullfoss',   is:'Áin við Gullfoss',
-    storyEn:'The white river that hurls itself over Gullfoss in a veil of spray.',
-    storyIs:'Hvíta áin sem steypist fram af Gullfossi í úðaslæðu.' },
   { slug:'river-hraunfljot', name:'Hraunfljót', en:'A River of Lava',     is:'Rennandi hraun',
-    storyEn:'Not water at all — a river of running lava, glowing as it goes.',
-    storyIs:'Alls ekki vatn — fljót úr rennandi hrauni, glóandi á leið sinni.' }
+    storyEn:'The rivers of Iceland are powerful, fast and often unpredictable. Four of these scarves take their name from one of them — Hraunfljót is the only exception. It is the Icelandic word for a river of lava.',
+    storyIs:'Ár Íslands eru kraftmiklar, straumharðar og oft óútreiknanlegar. Fjórar slæðanna bera nafn einnar þeirra — Hraunfljót er eina undantekningin. Það er íslenska orðið yfir fljót úr rennandi hrauni.' },
+  { slug:'river-skafta',     name:'Skaftá',     en:'River at Skaftafell', is:'Áin við Skaftafell',
+    storyEn:'Skaftá originates in Vatnajökull, Europe’s biggest glacier. It falls from a black cliff, and in warmer seasons — or when the earth is steaming — the water comes gushing down the sands, carrying huge rocks to the sea. Then it grows calm again and flows blue and bright from the glacier.',
+    storyIs:'Skaftá á upptök sín í Vatnajökli, stærsta jökli Evrópu. Hún fellur fram af svörtum hamri, og á hlýrri árstíðum — eða þegar jörðin gýs gufu — byltist vatnið niður sandana og ber með sér stórgrýti til sjávar. Svo kyrrist hún á ný og rennur blá og björt undan jöklinum.' },
+  { slug:'river-oxara',      name:'Öxará',      en:'River at Þingvellir', is:'Áin á Þingvöllum',
+    storyEn:'Öxará is a clear spring-fed river that runs through Þingvellir, the national park where Icelanders founded their first parliament in the year 930. There the leaders of every quarter of the country came together to settle disputes, pass new laws — and decide on trivial matters.',
+    storyIs:'Öxará er tær lindá sem rennur um Þingvelli, þjóðgarðinn þar sem Íslendingar stofnuðu sitt fyrsta þing árið 930. Þar komu höfðingjar allra landsfjórðunga saman, leystu deilur, settu ný lög — og tóku ákvarðanir um hversdagslegri mál.' },
+  { slug:'river-thjorsa',    name:'Þjórsá',     en:'The Highland River',  is:'Hálendisfljótið',
+    storyEn:'Þjórsá is the longest river in Iceland. Rising in the highland glacier Hofsjökull, it runs through mountains of light brown, red and yellow, changing colour with the light and the mood of the land.',
+    storyIs:'Þjórsá er lengsta á Íslands. Hún á upptök sín í Hofsjökli á hálendinu og rennur gegnum ljósbrún, rauð og gul fjöll, síbreytileg eftir birtunni og lund landsins.' },
+  { slug:'river-hvita',      name:'Hvítá',      en:'River of Gullfoss',   is:'Áin við Gullfoss',
+    storyEn:'Hvítá is the river that carries one of Iceland’s most beautiful waterfalls, Gullfoss.',
+    storyIs:'Hvítá er áin sem ber einn fegursta foss Íslands, Gullfoss.' }
 ];
+
 const riverBySlug = s => RIVERS.find(x=>x.slug===s);
 function riverCardHTML(s, i){
-  const no = String(i+1).padStart(2,'0');
+  const no = String((typeof i==='number'?i:RIVERS.indexOf(s))+10);
   return `<a class="card" href="product.html?s=${s.slug}">
-    <div class="idx">M ${no}</div>
+    <div class="idx">${no}</div>
     <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni — ${s.name}"></figure>
     <div class="meta">
       <div class="nm">${s.name}</div>
@@ -87,7 +93,7 @@ function injectPreorder(){
       <button class="x" onclick="closePreorder()" aria-label="Close">✕</button>
       <figure><img id="preImg" src="" alt="" /></figure>
       <div class="pre-info">
-        <span class="lbl" data-en="Preorder · Ships fall 2026 · 55 × 55 cm (one size only)" data-is="Forpöntun · Kemur haustið 2026 · 55 × 55 cm (ein stærð)">Preorder · Ships fall 2026 · 55 × 55 cm (one size only)</span>
+        <span class="lbl" data-en="Preorder · Ships fall 2026 · 55 × 55 cm" data-is="Forpöntun · Kemur haustið 2026 · 55 × 55 cm">Preorder · Ships fall 2026 · 55 × 55 cm</span>
         <h3 id="preName"></h3>
         <p class="pre-gl lbl" id="preGloss"></p>
         <p class="pre-txt" data-en="No payment now. Your email client opens with the reservation prepared — send it, and we will reserve yours and contact you at release."
@@ -110,7 +116,7 @@ function preMailtoHref(){
   const subject=`Preorder — ${s.name} (55×55)`;
   const body=[
     `Design: ${s.name} (${s.en})`,
-    `Size: 55 × 55 cm (one size only)`,
+    `Size: 55 × 55 cm`,
     `Quantity: ${PRE_QTY}`,
     `Ships: Fall 2026`,
     ``,
@@ -201,7 +207,7 @@ function renderCart(){
     return `<div class="ci">
       <img src="img/${s.slug}.jpg" alt="${s.name}">
       <div>
-        <div class="nm">${s.name}</div>
+        <div class="nm">${dispName(s,l)}</div>
         <div class="sz">${T.soldIn[l]}</div>
         <button class="rm" onclick="removeFromCart('${s.slug}')">${T.remove[l]}</button>
       </div>
@@ -245,12 +251,16 @@ function cardHTML(s, i){
   const no = String((typeof i==='number'?i:SCARVES.indexOf(s))+1).padStart(2,'0');
   const gloss = s.en ? `(${s.en})` : '';
   const glossIs = s.is && s.is!==s.name ? `(${s.is})` : '';
+  const nm = s.nEn
+    ? `<span data-en="${s.nEn}" data-is="${s.nIs}">${s.nEn}</span>`
+    : s.name;
   return `<a class="card" href="product.html?s=${s.slug}">
     <div class="idx">${no}</div>
     <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}"></figure>
     <div class="meta">
-      <div class="nm">${s.name}</div>
-      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${money(PRICE)}</span></div>
+      <div class="nm">${nm}</div>
+      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${priceHTML()}</span></div>
+      <div class="promo-lbl" data-en="Limited offer −30%" data-is="Kynningartilboð −30%">Limited offer −30%</div>
     </div>
   </a>`;
 }

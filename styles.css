@@ -154,9 +154,15 @@ section{padding:140px 0}
 .card:hover .nm{font-style:italic}
 .card .sub-lbl{font-size:.62rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
   color:var(--grey);margin-top:10px;display:flex;gap:12px;flex-wrap:wrap}
-.sub-lbl .gl,.sub-lbl b{font-weight:500;color:var(--grey)}
+.sub-lbl .gl,.sub-lbl b{font-weight:600;color:var(--ink)}
 .sub-lbl .soon-tag{font-weight:500;color:var(--grey)}
 .card .river-pre{margin-top:16px;font-size:.6rem}
+/* price: struck full price + introductory price */
+.pr s{color:var(--grey);font-weight:400;margin-right:6px}
+.promo-lbl{font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--grey);margin-top:8px}
+.pdp-info .promo-lbl{margin-top:12px}
+.pdp-info .price s{color:var(--grey);margin-right:8px}
 
 /* story — twilight spread, same language as the cover:
    photo right, dissolving into near-black where the words sit */
