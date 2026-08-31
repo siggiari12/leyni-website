@@ -4,6 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LEYNI — Silk of Iceland</title>
+<meta name="description" content="Leyni silk scarves — mulberry silk, designed in Iceland." />
+<link rel="canonical" href="https://leyni.com/shop.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="LEYNI — Silk of Iceland" />
+<meta property="og:title" content="LEYNI — Silk of Iceland" />
+<meta property="og:description" content="Leyni silk scarves — mulberry silk, designed in Iceland." />
+<meta property="og:url" content="https://leyni.com/shop.html" />
+<meta property="og:image" content="https://leyni.com/img/homepage.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LEYNI — Silk of Iceland" />
+<meta name="twitter:description" content="Leyni silk scarves — mulberry silk, designed in Iceland." />
+<meta name="twitter:image" content="https://leyni.com/img/homepage.jpg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#0E0E0E" />
 <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
@@ -72,7 +88,7 @@
       </div>
       <div>
         <h4 data-en="Contact" data-is="Samband">Contact</h4>
-        <a href="mailto:hello@leyni.is">hello@leyni.is</a>
+        <a href="mailto:hello@leyni.com">hello@leyni.com</a>
         <a href="index.html#story" data-en="About" data-is="Um Leyni">About</a>
       </div>
     </div>
@@ -170,6 +186,25 @@
                data-is="Pakkað í einkennisumbúðir. Sending um allan heim. 14 daga skilaréttur á ónotuðum vörum.">Wrapped in signature packaging. Worldwide shipping. 14-day returns on unworn pieces.</div>
         </details>
       </div>`;
+
+    // SEO: canonical + product structured data per design
+    const canon='https://leyni.com/product.html?s='+s.slug;
+    let lk=document.querySelector('link[rel=canonical]'); if(lk) lk.href=canon;
+    document.getElementById('pdpLD')?.remove();
+    const ld=document.createElement('script'); ld.type='application/ld+json'; ld.id='pdpLD';
+    ld.textContent=JSON.stringify({
+      "@context":"https://schema.org","@type":"Product",
+      "name":dispName(s,'en')+(s.en&&s.en!==s.name?' ('+s.en+')':''),
+      "image":"https://leyni.com/img/"+s.slug+".jpg",
+      "description":s.storyEn,
+      "brand":{"@type":"Brand","name":"Leyni"},
+      "material":"Mulberry silk",
+      "size":IS_RIVER?"55 × 55 cm":"88 × 88 cm",
+      "offers":IS_RIVER
+        ?{"@type":"Offer","priceCurrency":"ISK","availability":"https://schema.org/PreOrder","url":canon}
+        :{"@type":"Offer","price":"12740","priceCurrency":"ISK","availability":"https://schema.org/InStock","url":canon}
+    });
+    document.head.appendChild(ld);
     document.title = `${dispName(s,lang())} — LEYNI`;
     QTY=1;
   }
