@@ -3,8 +3,8 @@
    ============================================================ */
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
-const PRICE_FULL = 18200;            // ISK
-const PRICE = 12740;                 // introductory -30% (limited)
+const PRICE_FULL = 14200;            // ISK
+const PRICE = 11360;                 // introductory -20% (limited)
 const priceHTML = () => `<s>${money(PRICE_FULL)}</s> ${money(PRICE)}`;
 const SCARVES = [
   { slug:'raudisandur',   name:'Rauðisandur',   color:'#D6645A',
@@ -155,7 +155,7 @@ const T = {
   addToBag:{en:'Add to bag',is:'Setja í körfu'},
   quickAdd:{en:'Quick add',is:'Bæta við'},
   soldIn:{en:'88 × 88 cm',is:'88 × 88 cm'},
-  title:{en:'LEYNI — Silk of Iceland',is:'LEYNI — Silki frá Íslandi'},
+  title:{en:'LEYNI — Secret North',is:'LEYNI — Secret North'},
   cartEmpty:{en:'Your bag is empty.',is:'Karfan þín er tóm.'},
   subtotal:{en:'Subtotal',is:'Samtals'},
   shipNote:{en:'Shipping & taxes calculated at checkout.',is:'Sending og gjöld reiknast í greiðsluferli.'},
@@ -260,7 +260,7 @@ function cardHTML(s, i){
     <div class="meta">
       <div class="nm">${nm}</div>
       <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${priceHTML()}</span></div>
-      <div class="promo-lbl" data-en="Limited offer −30%" data-is="Kynningartilboð −30%">Limited offer −30%</div>
+      <div class="promo-lbl" data-en="Limited offer −20%" data-is="Kynningartilboð −20%">Limited offer −20%</div>
     </div>
   </a>`;
 }
