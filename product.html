@@ -136,7 +136,7 @@
     const size = IS_RIVER ? '55 × 55 cm' : '88 × 88 cm';
     const priceLine = IS_RIVER
       ? `<div class="price">${l==='en'?'Preorder · Ships fall 2026':'Forpöntun · Kemur haustið 2026'}</div>`
-      : `<div class="price">${priceHTML()}</div>
+      : `<div class="price">${priceHTML(s.slug)}</div>
          <div class="promo-lbl" data-en="Limited offer −20%" data-is="Kynningartilboð −20%">Limited offer −20%</div>`;
     const qtyBlock = IS_RIVER ? '' : `
       <div class="opt">
@@ -149,9 +149,12 @@
       </div>`;
     const cta = IS_RIVER
       ? `<button class="btn dark block" onclick="openPreorder('${s.slug}')"
-          data-en="Preorder by email" data-is="Panta með tölvupósti">Preorder by email</button>`
-      : `<button class="btn dark block" onclick="addToCart('${s.slug}',QTY)"
-          data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>`;
+          data-en="Preorder" data-is="Forpanta">Preorder</button>`
+      : (soldOut(s.slug)
+        ? `<button class="btn dark block" disabled style="opacity:.4;cursor:default"
+            data-en="Sold out" data-is="Uppselt">Sold out</button>`
+        : `<button class="btn dark block" onclick="addToCart('${s.slug}',QTY)"
+            data-en="Add to bag" data-is="Setja í körfu">Add to bag</button>`);
     document.getElementById('pdpInfo').innerHTML=`
       <span class="lbl" style="display:block;margin-bottom:1.6em">№ ${no}${glossLine}</span>
       <h1>${dispName(s,l)}</h1>

@@ -129,7 +129,7 @@
     <div class="pre-block reveal">
       <p class="muted" data-en="Prefer to wait? Sign up and we will notify you at release."
          data-is="Viltu frekar bíða? Skráðu þig og við látum þig vita við útgáfu.">Prefer to wait? Sign up and we will notify you at release.</p>
-      <form class="signup" onsubmit="this.reset();alert('Thank you — you’re on the list.');return false;">
+      <form class="signup" onsubmit="var e=this.querySelector('input').value;var f=this;fetch(API+'/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,source:'rivers'})}).then(function(){f.reset();alert(lang()==='is'?'Takk — þú ert á listanum.':'Thank you — you’re on the list.');});return false;">
         <input type="email" required placeholder="Email address" aria-label="Email" />
         <button type="submit" data-en="Sign up" data-is="Skrá">Sign up</button>
       </form>

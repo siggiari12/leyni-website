@@ -324,6 +324,11 @@ footer{border-top:1px solid var(--line);padding:80px 0 44px}
   .pre-info{padding:28px 24px}
 }
 
+/* preorder modal fields */
+.pre-fields{display:flex;flex-direction:column;gap:10px;margin-top:1.6em}
+.pre-fields input{font:inherit;font-size:.92rem;padding:11px 13px;border:1px solid var(--line);border-radius:0}
+.pre-fields input:focus{outline:none;border-color:var(--ink)}
+
 /* ============================================================
    CART DRAWER
    ============================================================ */

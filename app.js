@@ -2,10 +2,31 @@
    LEYNI — shared data, i18n, cart, interactions
    ============================================================ */
 
+/* ---------- Backend API ---------- */
+const API = 'https://leyni-api-production.up.railway.app';
+let CATALOG = null;   // slug -> {price, price_full, stock, in_stock, preorder}
+let SHIPPING = { price: 2000, label: 'DHL Express' };
+async function loadCatalog(){
+  try{
+    const r = await fetch(API + '/api/products');
+    if(!r.ok) return;
+    const d = await r.json();
+    CATALOG = {};
+    for(const p of d.products) CATALOG[p.slug] = p;
+    SHIPPING = d.shipping || SHIPPING;
+  }catch(e){ /* offline/api down: static fallback */ }
+}
+const prod = slug => (CATALOG && CATALOG[slug]) || null;
+const soldOut = slug => { const p = prod(slug); return p ? (!p.preorder && p.stock <= 0) : false; };
+
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
 const PRICE_FULL = 14200;            // ISK
 const PRICE = 11360;                 // introductory -20% (limited)
-const priceHTML = () => `<s>${money(PRICE_FULL)}</s> ${money(PRICE)}`;
+const priceHTML = (slug) => {
+  const p = slug ? prod(slug) : null;
+  const full = p ? p.price_full : PRICE_FULL, now = p ? p.price : PRICE;
+  return `<s>${money(full)}</s> ${money(now)}`;
+};
 const SCARVES = [
   { slug:'raudisandur',   name:'Rauðisandur',   color:'#D6645A',
     en:'Red Sand Beach', is:'Rauðisandur',
@@ -83,7 +104,7 @@ function riverCardHTML(s, i){
   </a>`;
 }
 
-/* ---------- Preorder reservation modal (B — email, no payment) ---------- */
+/* ---------- Preorder reservation modal (saved via API, no payment) ---------- */
 let PRE_QTY = 1, PRE_CUR = null;
 function injectPreorder(){
   const el=document.createElement('div');
@@ -96,8 +117,12 @@ function injectPreorder(){
         <span class="lbl" data-en="Preorder · Ships fall 2026 · 55 × 55 cm" data-is="Forpöntun · Kemur haustið 2026 · 55 × 55 cm">Preorder · Ships fall 2026 · 55 × 55 cm</span>
         <h3 id="preName"></h3>
         <p class="pre-gl lbl" id="preGloss"></p>
-        <p class="pre-txt" data-en="No payment now. Your email client opens with the reservation prepared — send it, and we will reserve yours and contact you at release."
-           data-is="Engin greiðsla núna. Tölvupósturinn þinn opnast með pöntunina tilbúna — sendu hann og við tökum eintakið þitt frá og höfum samband við útgáfu.">No payment now. Your email client opens with the reservation prepared — send it, and we will reserve yours and contact you at release.</p>
+        <p class="pre-txt" data-en="No payment now. Leave your email and we will reserve yours and contact you at release."
+           data-is="Engin greiðsla núna. Skráðu netfangið þitt og við tökum eintakið þitt frá og höfum samband við útgáfu.">No payment now. Leave your email and we will reserve yours and contact you at release.</p>
+        <div class="pre-fields">
+          <input type="text" id="preNameIn" placeholder="Name" data-ph-en="Name" data-ph-is="Nafn" />
+          <input type="email" id="preEmailIn" placeholder="Email address" data-ph-en="Email address" data-ph-is="Netfang" />
+        </div>
         <div class="opt">
           <div class="lbl" data-en="Quantity" data-is="Fjöldi">Quantity</div>
           <div class="qty">
@@ -106,24 +131,11 @@ function injectPreorder(){
             <button onclick="preBump(1)" aria-label="Plus">+</button>
           </div>
         </div>
-        <a class="btn dark block" id="preMailto" href="#" data-en="Reserve by email" data-is="Panta með tölvupósti">Reserve by email</a>
+        <button class="btn dark block" id="preSubmit" onclick="preReserve()" data-en="Reserve" data-is="Taka frá">Reserve</button>
+        <p class="pre-done lbl" id="preDone" style="display:none;margin-top:1.4em"></p>
       </div>
     </aside>`;
   document.body.appendChild(el);
-}
-function preMailtoHref(){
-  const s=PRE_CUR, l=lang();
-  const subject=`Preorder — ${s.name} (55×55)`;
-  const body=[
-    `Design: ${s.name} (${s.en})`,
-    `Size: 55 × 55 cm`,
-    `Quantity: ${PRE_QTY}`,
-    `Ships: Fall 2026`,
-    ``,
-    `Name:`,
-    `Shipping address:`
-  ].join('\n');
-  return `mailto:${PREORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 function openPreorder(slug){
   PRE_CUR=riverBySlug(slug); if(!PRE_CUR) return;
@@ -134,18 +146,39 @@ function openPreorder(slug){
   document.getElementById('preName').textContent=PRE_CUR.name;
   document.getElementById('preGloss').textContent=`(${(l==='en'?PRE_CUR.en:PRE_CUR.is).toUpperCase()})`;
   document.getElementById('preQtyVal').textContent='1';
-  document.getElementById('preMailto').href=preMailtoHref();
+  document.getElementById('preDone').style.display='none';
+  document.getElementById('preSubmit').style.display='';
+  document.querySelectorAll('#preModal [data-ph-en]').forEach(i=>i.placeholder=i.getAttribute('data-ph-'+l));
   document.getElementById('preScrim').classList.add('open');
   document.getElementById('preModal').classList.add('open');
 }
 function preBump(d){
-  PRE_QTY=Math.max(1,PRE_QTY+d);
+  PRE_QTY=Math.max(1,Math.min(10,PRE_QTY+d));
   document.getElementById('preQtyVal').textContent=PRE_QTY;
-  document.getElementById('preMailto').href=preMailtoHref();
+}
+async function preReserve(){
+  const email=document.getElementById('preEmailIn').value.trim();
+  const name=document.getElementById('preNameIn').value.trim();
+  const l=lang();
+  if(!/.+@.+\..+/.test(email)){ document.getElementById('preEmailIn').focus(); return; }
+  const btn=document.getElementById('preSubmit'); btn.disabled=true;
+  try{
+    const r=await fetch(API+'/api/preorders',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({slug:PRE_CUR.slug,qty:PRE_QTY,name,email})});
+    if(!r.ok) throw new Error();
+    btn.style.display='none';
+    const d=document.getElementById('preDone');
+    d.textContent=(l==='is'?'Frátekið — við höfum samband við útgáfu.':'Reserved — we will contact you at release.');
+    d.style.display='block';
+  }catch(e){
+    btn.disabled=false;
+    alert(l==='is'?'Villa — reyndu aftur.':'Something went wrong — please try again.');
+  }
 }
 function closePreorder(){
   document.getElementById('preScrim')?.classList.remove('open');
   document.getElementById('preModal')?.classList.remove('open');
+  const b=document.getElementById('preSubmit'); if(b) b.disabled=false;
 }
 
 /* ---------- i18n ---------- */
@@ -203,7 +236,7 @@ function renderCart(){
   }
   let sub=0;
   body.innerHTML=cart.map(i=>{
-    const s=bySlug(i.slug); const line=PRICE*i.qty; sub+=line;
+    const s=bySlug(i.slug); const pp=prod(i.slug); const unit=pp?pp.price:PRICE; const line=unit*i.qty; sub+=line;
     return `<div class="ci">
       <img src="img/${s.slug}.jpg" alt="${s.name}">
       <div>
@@ -217,7 +250,7 @@ function renderCart(){
   foot.innerHTML=`
     <div class="row total"><span>${T.subtotal[l]}</span><span>${money(sub)}</span></div>
     <div class="note">${T.shipNote[l]}</div>
-    <button class="btn solid block" style="--accent:#101010" onclick="alert('Shopify checkout connects here.')">${T.checkout[l]}</button>`;
+    <a class="btn dark block" href="checkout.html">${T.checkout[l]}</a>`;
 }
 function openCart(){ document.getElementById('scrim')?.classList.add('open'); document.getElementById('drawer')?.classList.add('open'); }
 function closeCart(){ document.getElementById('scrim')?.classList.remove('open'); document.getElementById('drawer')?.classList.remove('open'); }
@@ -259,8 +292,8 @@ function cardHTML(s, i){
     <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}"></figure>
     <div class="meta">
       <div class="nm">${nm}</div>
-      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${priceHTML()}</span></div>
-      <div class="promo-lbl" data-en="Limited offer −20%" data-is="Kynningartilboð −20%">Limited offer −20%</div>
+      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${soldOut(s.slug)?'':priceHTML(s.slug)}</span>${soldOut(s.slug)?'<span class="soon-tag" data-en="Sold out" data-is="Uppselt">Sold out</span>':''}</div>
+      ${soldOut(s.slug)?'':'<div class="promo-lbl" data-en="Limited offer −20%" data-is="Kynningartilboð −20%">Limited offer −20%</div>'}
     </div>
   </a>`;
 }
@@ -287,5 +320,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   applyLang(lang());
   renderCart();
   initReveal();
+  loadCatalog().then(()=>{
+    if(!CATALOG) return;
+    if(typeof PAGE_RENDER==='function') PAGE_RENDER();
+    applyLang(lang());
+    renderCart();
+    document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));
+  });
   document.addEventListener('langchange',()=>{ renderCart(); if(typeof PAGE_LANG==='function') PAGE_LANG(); });
 });
