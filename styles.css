@@ -156,6 +156,7 @@ section{padding:140px 0}
   color:var(--grey);margin-top:10px;display:flex;gap:12px;flex-wrap:wrap}
 .sub-lbl .gl,.sub-lbl b{font-weight:600;color:var(--ink)}
 .sub-lbl .soon-tag{font-weight:500;color:var(--grey)}
+.low-tag{font-size:.62rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#8a3b2e}
 .card .river-pre{margin-top:16px;font-size:.6rem}
 /* price */
 .pr s{color:var(--grey);font-weight:400;margin-right:6px}

@@ -137,6 +137,7 @@
     const priceLine = IS_RIVER
       ? `<div class="price">${l==='en'?'Preorder · Ships fall 2026':'Forpöntun · Kemur haustið 2026'}</div>`
       : `<div class="price">${priceHTML(s.slug)}</div>
+         ${lowStock(s.slug)?`<div class="low-tag" style="margin-top:10px">${l==='is'?'Aðeins '+lowStock(s.slug)+' eftir á lager':'Only '+lowStock(s.slug)+' left in stock'}</div>`:''}
          <div class="offer-line">${l==='is'
            ?'Kynningartilboð — 15% afsláttur af fyrstu slæðunni þinni með kóðanum <b>LAUNCH15</b> við greiðslu. Gildir til septemberloka 2026.'
            :'Introducing Leyni — enjoy 15% off your first scarf with code <b>LAUNCH15</b> at checkout. Valid until the end of September 2026.'}</div>`;

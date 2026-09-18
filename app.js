@@ -18,6 +18,7 @@ async function loadCatalog(){
 }
 const prod = slug => (CATALOG && CATALOG[slug]) || null;
 const soldOut = slug => { const p = prod(slug); return p ? (!p.preorder && p.stock <= 0) : false; };
+const lowStock = slug => { const p = prod(slug); return (p && !p.preorder && p.stock > 0 && p.stock <= 3) ? p.stock : 0; };
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
 const PRICE_FULL = 14900;            // ISK
@@ -291,7 +292,7 @@ function cardHTML(s, i){
     <figure><img loading="lazy" src="img/${s.slug}.jpg" alt="Leyni scarf — ${s.name}"></figure>
     <div class="meta">
       <div class="nm">${nm}</div>
-      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${soldOut(s.slug)?'':priceHTML(s.slug)}</span>${soldOut(s.slug)?'<span class="soon-tag" data-en="Sold out" data-is="Uppselt">Sold out</span>':''}</div>
+      <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${soldOut(s.slug)?'':priceHTML(s.slug)}</span>${soldOut(s.slug)?'<span class="soon-tag" data-en="Sold out" data-is="Uppselt">Sold out</span>':''}${lowStock(s.slug)?`<span class="low-tag" data-en="Only ${lowStock(s.slug)} left" data-is="Aðeins ${lowStock(s.slug)} eftir">Only ${lowStock(s.slug)} left</span>`:''}</div>
     </div>
   </a>`;
 }
