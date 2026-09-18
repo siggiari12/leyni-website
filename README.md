@@ -1,4 +1,4 @@
-# LEYNI — Secret North
+# LEYNI — Boutique Iceland
 
 Storefront for **Leyni**, a mulberry-silk scarf label designed in Iceland.
 

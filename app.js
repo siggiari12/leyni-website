@@ -5,7 +5,7 @@
 /* ---------- Backend API ---------- */
 const API = 'https://leyni-api-production.up.railway.app';
 let CATALOG = null;   // slug -> {price, price_full, stock, in_stock, preorder}
-let SHIPPING = { price: 2000, label: 'DHL Express' };
+let SHIPPING = { domestic: 1000, intl: 1500 };
 async function loadCatalog(){
   try{
     const r = await fetch(API + '/api/products');
@@ -20,12 +20,11 @@ const prod = slug => (CATALOG && CATALOG[slug]) || null;
 const soldOut = slug => { const p = prod(slug); return p ? (!p.preorder && p.stock <= 0) : false; };
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
-const PRICE_FULL = 14200;            // ISK
-const PRICE = 11360;                 // introductory -20% (limited)
+const PRICE_FULL = 14900;            // ISK
+const PRICE = 14900;                 // flat price (LAUNCH15 code -> -15% at checkout)
 const priceHTML = (slug) => {
   const p = slug ? prod(slug) : null;
-  const full = p ? p.price_full : PRICE_FULL, now = p ? p.price : PRICE;
-  return `<s>${money(full)}</s> ${money(now)}`;
+  return money(p ? p.price : PRICE);
 };
 const SCARVES = [
   { slug:'raudisandur',   name:'Rauðisandur',   color:'#D6645A',
@@ -188,7 +187,7 @@ const T = {
   addToBag:{en:'Add to bag',is:'Setja í körfu'},
   quickAdd:{en:'Quick add',is:'Bæta við'},
   soldIn:{en:'88 × 88 cm',is:'88 × 88 cm'},
-  title:{en:'LEYNI — Secret North',is:'LEYNI — Secret North'},
+  title:{en:'LEYNI — Boutique Iceland',is:'LEYNI — Boutique Iceland'},
   cartEmpty:{en:'Your bag is empty.',is:'Karfan þín er tóm.'},
   subtotal:{en:'Subtotal',is:'Samtals'},
   shipNote:{en:'Shipping & taxes calculated at checkout.',is:'Sending og gjöld reiknast í greiðsluferli.'},
@@ -293,7 +292,6 @@ function cardHTML(s, i){
     <div class="meta">
       <div class="nm">${nm}</div>
       <div class="sub-lbl"><span class="gl" data-en="${gloss}" data-is="${glossIs}">${gloss}</span><span class="pr">${soldOut(s.slug)?'':priceHTML(s.slug)}</span>${soldOut(s.slug)?'<span class="soon-tag" data-en="Sold out" data-is="Uppselt">Sold out</span>':''}</div>
-      ${soldOut(s.slug)?'':'<div class="promo-lbl" data-en="Limited offer −20%" data-is="Kynningartilboð −20%">Limited offer −20%</div>'}
     </div>
   </a>`;
 }

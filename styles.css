@@ -157,8 +157,11 @@ section{padding:140px 0}
 .sub-lbl .gl,.sub-lbl b{font-weight:600;color:var(--ink)}
 .sub-lbl .soon-tag{font-weight:500;color:var(--grey)}
 .card .river-pre{margin-top:16px;font-size:.6rem}
-/* price: struck full price + introductory price */
+/* price */
 .pr s{color:var(--grey);font-weight:400;margin-right:6px}
+.offer-line{font-size:.8rem;color:var(--grey);margin-top:1.6em;max-width:52ch;line-height:1.7}
+.offer-line b{color:var(--ink);letter-spacing:.08em}
+.sec-head .offer-line{margin-top:1.8em}
 .promo-lbl{font-size:.56rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
   color:var(--grey);margin-top:8px}
 .pdp-info .promo-lbl{margin-top:12px}

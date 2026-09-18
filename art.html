@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Art — LEYNI</title>
+<meta name="description" content="Leyni Art — original artwork and fine prints from Iceland. Coming soon." />
+<link rel="canonical" href="https://leyni.com/art.html" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<meta name="theme-color" content="#0E0E0E" />
+<link rel="stylesheet" href="styles.css?v=5" />
+</head>
+<body>
+
+<header class="nav solid">
+  <div class="wrap nav-in">
+    <div class="nav-l">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+      <a class="link" href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+      <a class="link" href="index.html#story" data-en="House" data-is="Húsið">House</a>
+      <a class="link" href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
+    </div>
+    <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>BOUTIQUE ICELAND</small></a>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang-btn="en">EN</button><span class="sep">/</span><button data-lang-btn="is">IS</button>
+      </div>
+      <button class="link bag" data-open-cart aria-label="Bag">
+        <svg class="bag-ico" width="17" height="19" viewBox="0 0 17 19" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M2.2 5.8h12.6l-1.05 11.9H3.25L2.2 5.8Z"/><path d="M5.6 7.6V4.4a2.9 2.9 0 0 1 5.8 0v3.2"/></svg><span class="count">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
+    <a href="index.html#story" data-en="House" data-is="Húsið">House</a>
+    <a href="index.html#craft" data-en="Craft" data-is="Handverk">Craft</a>
+  </div>
+</header>
+
+<div class="wrap page-top" style="padding-bottom:16vh">
+  <p class="lbl" data-en="Art — coming soon" data-is="Listaverk — væntanlegt">Art — coming soon</p>
+  <h1><span data-en="Iceland," data-is="Ísland,">Iceland,</span> <em data-en="framed" data-is="innrammað">framed</em></h1>
+  <p class="sub" data-en="Original artwork and fine prints, drawn from the same Icelandic light as the scarves. The first three works arrive shortly."
+     data-is="Frumverk og vandaðar prentanir, sóttar í sama íslenska ljósið og slæðurnar. Fyrstu þrjú verkin koma innan skamms.">Original artwork and fine prints, drawn from the same Icelandic light as the scarves. The first three works arrive shortly.</p>
+
+  <div class="pre-block" style="margin-top:7vh">
+    <p class="muted" data-en="Leave your email and be first to see them."
+       data-is="Skráðu netfangið þitt og sjáðu þau fyrst.">Leave your email and be first to see them.</p>
+    <form class="signup" onsubmit="var e=this.querySelector('input').value;var f=this;fetch(API+'/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,source:'art'})}).then(function(){f.reset();alert(lang()==='is'?'Takk — þú ert á listanum.':'Thank you — you’re on the list.');});return false;">
+      <input type="email" required placeholder="Email address" aria-label="Email" />
+      <button type="submit" data-en="Sign up" data-is="Skrá">Sign up</button>
+    </form>
+  </div>
+
+  <p style="margin-top:9vh"><a class="ulink" href="shop.html" data-en="Meanwhile — the silk scarves" data-is="Á meðan — silkislæðurnar">Meanwhile — the silk scarves</a></p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="fm">LEYNI</div>
+        <p data-en="Silk scarves designed in Iceland, made from certified mulberry silk."
+           data-is="Silkislæður hannaðar á Íslandi, úr vottuðu mulberry-silki.">Silk scarves designed in Iceland, made from certified mulberry silk.</p>
+      </div>
+      <div>
+        <h4 data-en="Shop" data-is="Verslun">Shop</h4>
+        <a href="shop.html" data-en="The collection" data-is="Slæðurnar">The collection</a>
+        <a href="index.html#men" data-en="Men / Unisex — coming soon" data-is="Karlar / Unisex — væntanlegt">Men / Unisex — coming soon</a>
+      </div>
+      <div>
+        <h4 data-en="Contact" data-is="Samband">Contact</h4>
+        <a href="mailto:hello@leyni.com">hello@leyni.com</a>
+        <a href="index.html#story" data-en="About" data-is="Um Leyni">About</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Leyni · Boutique Iceland™</span>
+      <span data-en="Designed in Iceland" data-is="Hannað á Íslandi">Designed in Iceland</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=5"></script>
+</body>
+</html>

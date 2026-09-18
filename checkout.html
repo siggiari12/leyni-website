@@ -40,7 +40,7 @@
     <div class="nav-l">
       <a class="link" href="shop.html" data-en="Collection" data-is="Slæðurnar">Collection</a>
     </div>
-    <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>SECRET NORTH</small></a>
+    <a href="index.html" class="wordmark" aria-label="Leyni home">LEYNI<small>BOUTIQUE ICELAND</small></a>
     <div class="nav-r">
       <div class="lang" role="group" aria-label="Language">
         <button data-lang-btn="en">EN</button><span class="sep">/</span><button data-lang-btn="is">IS</button>
@@ -70,6 +70,13 @@
       </div>
       <label><span class="lbl" data-en="Country" data-is="Land">Country</span><input name="country" required minlength="2" value="Iceland" /></label>
       <label><span class="lbl" data-en="Note (optional)" data-is="Athugasemd (valfrjálst)">Note (optional)</span><textarea name="note" rows="2"></textarea></label>
+      <label><span class="lbl" data-en="Promo code" data-is="Afsláttarkóði">Promo code</span>
+        <span style="display:flex;gap:10px">
+          <input name="promo_code" id="promoIn" style="flex:1" placeholder="LAUNCH15" />
+          <button type="button" class="btn dark" style="padding:12px 22px" onclick="applyPromo()" data-en="Apply" data-is="Virkja">Apply</button>
+        </span>
+        <span class="lbl" id="promoMsg" style="display:none;margin-top:8px"></span>
+      </label>
       <button class="btn dark block" id="coBtn" data-en="Place order" data-is="Staðfesta pöntun">Place order</button>
       <p class="err" id="coErr"></p>
       <p style="font-size:.78rem;color:var(--grey);margin-top:16px"
@@ -80,6 +87,7 @@
     <aside class="sum">
       <h3 data-en="Your order" data-is="Pöntunin þín">Your order</h3>
       <div id="sumItems"></div>
+      <div class="tot" id="sumDiscRow" style="margin-top:14px;font-weight:400;display:none"><span class="lbl">LAUNCH15</span><span id="sumDisc" style="font-family:var(--sans);font-size:.85rem"></span></div>
       <div class="tot" style="margin-top:14px;font-weight:400"><span class="lbl" data-en="Shipping" data-is="Sending">Shipping</span><span id="sumShip" style="font-family:var(--sans);font-size:.85rem"></span></div>
       <div class="tot"><span data-en="Total" data-is="Samtals">Total</span><span id="sumTotal"></span></div>
     </aside>
@@ -89,9 +97,15 @@
 <script src="app.js?v=5"></script>
 <script>
   function money2(n){ return money(n); }
+  let PROMO = { code:'', percent:0 };
   function cartLines(){
     return getCart().map(i=>({ ...i, p: bySlug(i.slug) })).filter(x=>x.p);
   }
+  function isDomestic(){
+    const c=(document.querySelector('[name=country]')?.value||'').trim();
+    return /^(ísland|island|iceland|is)\.?$/i.test(c);
+  }
+  function shipCost(){ return isDomestic() ? SHIPPING.domestic : SHIPPING.intl; }
   function renderSummary(){
     const lines=cartLines();
     if(!lines.length){ location.href='shop.html'; return; }
@@ -101,10 +115,36 @@
       const cp=prod(x.slug); const unit=cp?cp.price:PRICE; const line=unit*x.qty; sub+=line;
       return `<div class="li"><span>${x.qty} × ${dispName(x.p,l)}</span><span>${money2(line)}</span></div>`;
     }).join('');
-    document.getElementById('sumShip').textContent=`${SHIPPING.label} · ${money2(SHIPPING.price)}`;
-    document.getElementById('sumTotal').textContent=money2(sub+SHIPPING.price);
+    const disc = PROMO.percent ? Math.round(sub*PROMO.percent/100) : 0;
+    const row=document.getElementById('sumDiscRow');
+    row.style.display = disc ? 'flex' : 'none';
+    if(disc) document.getElementById('sumDisc').textContent='−'+money2(disc);
+    const ship=shipCost();
+    document.getElementById('sumShip').textContent=
+      (isDomestic() ? (l==='is'?'Innanlands':'Iceland') : (l==='is'?'Til útlanda':'International'))+' · '+money2(ship);
+    document.getElementById('sumTotal').textContent=money2(sub-disc+ship);
   }
-  function PAGE_RENDER(){ renderSummary(); }
+  async function applyPromo(){
+    const code=document.getElementById('promoIn').value.trim();
+    const msg=document.getElementById('promoMsg'); const l=lang();
+    if(!code){ PROMO={code:'',percent:0}; msg.style.display='none'; renderSummary(); return; }
+    try{
+      const r=await fetch(API+'/api/promo?code='+encodeURIComponent(code));
+      const d=await r.json();
+      if(d.valid){ PROMO={code,percent:d.percent};
+        msg.textContent=(l==='is'?'Kóði virkur — ':'Code applied — ')+d.percent+'%';
+        msg.style.color='#2c7a4b';
+      } else { PROMO={code:'',percent:0};
+        msg.textContent=(l==='is'?'Ógildur kóði':'Invalid or expired code');
+        msg.style.color='#a33';
+      }
+      msg.style.display='block'; renderSummary();
+    }catch(e){}
+  }
+  function PAGE_RENDER(){
+    renderSummary();
+    document.querySelector('[name=country]')?.addEventListener('input', renderSummary);
+  }
   function PAGE_LANG(){ renderSummary(); }
 
   async function submitOrder(ev){
@@ -117,7 +157,7 @@
     try{
       const r=await fetch(API+'/api/orders',{method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({items,customer})});
+        body:JSON.stringify({items,customer,promo_code:PROMO.code})});
       const d=await r.json();
       if(!r.ok) throw new Error(d.error||'error');
       setCart([]);
