@@ -396,3 +396,85 @@ footer{border-top:1px solid var(--line);padding:80px 0 44px}
   .foot{grid-template-columns:1fr}
   .signup{flex-direction:column;align-items:stretch;gap:18px}
 }
+
+/* ============================================================
+   MOBILE TYPOGRAPHY & PROPORTION OVERHAUL
+   Labels/prices readable, spacing rebalanced
+   ============================================================ */
+@media(max-width:820px){
+  body{font-size:16px}
+  /* readable tracked labels */
+  .lbl{font-size:.8rem;letter-spacing:.22em}
+  .ulink{font-size:.8rem;letter-spacing:.2em;padding-bottom:7px}
+  .btn{font-size:.8rem;padding:16px 32px}
+  .lang{font-size:.8rem}
+  .bag{font-size:.8rem}
+  .bag .bag-ico{width:16px;height:18px}
+  /* cards */
+  .cards{gap:52px 18px}
+  .card .idx{font-size:.74rem}
+  .card .nm{font-size:1.6rem}
+  .card .sub-lbl{font-size:.76rem;letter-spacing:.18em;margin-top:8px}
+  .low-tag{font-size:.72rem;letter-spacing:.18em}
+  .offer-line{font-size:.95rem;margin-top:1.3em}
+  /* sections & rhythm */
+  section{padding:76px 0}
+  .sec-head{margin-bottom:44px}
+  #story{padding:100px 0}
+  .story-txt .lbl{margin-bottom:2em}
+  .story-body{margin-top:4vh}
+  .soon-ed .cols{margin-top:5vh;gap:36px}
+  .rivers-cards{margin-top:6vh;gap:36px 14px}
+  .rivers-cards .nm{font-size:1.35rem}
+  .card .river-pre{font-size:.74rem}
+  .pre-block{margin-top:6vh}
+  /* craft list */
+  .craft-list li span:first-child{font-size:.76rem;letter-spacing:.18em}
+  .craft-list li span:last-child{font-size:1.1rem}
+  /* filters / shop */
+  .filters{gap:22px}
+  .filters button{font-size:.78rem;letter-spacing:.18em}
+  .page-top{padding-top:calc(76px + 7vh)}
+  .page-top .sub{font-size:1rem}
+  /* pdp */
+  .pdp{padding-top:calc(76px + 4vh)}
+  .crumbs{font-size:.74rem;margin-bottom:3vh}
+  .pdp-info .price{font-size:.95rem}
+  .pdp-info .desc{font-size:1.15rem}
+  .opt .lbl{font-size:.76rem}
+  .acc summary{font-size:.78rem;padding:18px 0}
+  .acc .body{font-size:.95rem}
+  /* footer */
+  .foot h4{font-size:.74rem}
+  .foot a{font-size:.95rem;margin-bottom:12px}
+  .foot-bot{font-size:.72rem;letter-spacing:.16em;gap:12px}
+  /* modal + forms: 16px inputs stop iOS zoom-on-focus */
+  input,textarea,select{font-size:16px}
+  .pre-info{padding:26px 22px}
+  .pre-info h3{font-size:1.7rem}
+  .pre-info .pre-txt{font-size:.95rem}
+  .signup input{font-size:16px;padding:12px 0}
+  .signup button{font-size:.8rem}
+  .drawer-top h3{font-size:.8rem}
+  .ci .nm{font-size:1.3rem}
+  .ci .sz{font-size:.72rem}
+  .ci .rm{font-size:.72rem}
+  .drawer-foot .row{font-size:.95rem}
+  .drawer-foot .row.total{font-size:.78rem}
+  .drawer-foot .note{font-size:.82rem}
+}
+@media(max-width:560px){
+  .cover h1{font-size:clamp(2.7rem,12.5vw,3.4rem)}
+  .cover-cta{gap:22px}
+  .cover-in{padding-bottom:11vh}
+  .sec-head h2{font-size:1.85rem}
+  .story-txt h2{font-size:2.2rem}
+  .soon-ed h2{font-size:2.4rem}
+  .page-top h1{font-size:2.4rem}
+  .craft h2{font-size:2.1rem}
+  .news h2{font-size:2.3rem}
+  .wordmark{font-size:1.3rem}
+  .wordmark small{font-size:.42rem}
+  .rivers-cards{grid-template-columns:1fr 1fr;gap:32px 12px}
+  .rivers-cards .sub-lbl{font-size:.66rem}
+}
