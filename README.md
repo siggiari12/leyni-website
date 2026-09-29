@@ -33,7 +33,7 @@ The design is structured to move onto Shopify: `SCARVES` data in `app.js` maps t
 
 ## Notes
 
-- Prices (`26.900 kr`) and contact email (`hello@leyni.is`) are placeholders — edit `PRICE` in `app.js` and links in the footers.
+- Price is `14.900 kr` — set per scarf in the admin Stock page; `PRICE` in `app.js` and the JSON-LD in `shop.html`/`product.html` are the static fallback. Contact email is `hello@leyni.com`.
 - Signature colours are sampled from the artwork and defined per scarf in `app.js`.
 - Nine women's designs (88×88 cm). Men's "rivers" set (55×55 cm) shown as *coming soon*.
 - Designs by Icelandic artist Margrét Júlíana Sigurðardóttir · 100% mulberry silk · OEKO-TEX® certified.
