@@ -22,7 +22,7 @@ const lowStock = slug => { const p = prod(slug); return (p && !p.preorder && p.s
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
 const PRICE_FULL = 14900;            // ISK
-const PRICE = 14900;                 // flat price (LAUNCH15 code -> -15% at checkout)
+const PRICE = 14900;                 // flat price; promo codes are applied at checkout
 const priceHTML = (slug) => {
   const p = slug ? prod(slug) : null;
   return money(p ? p.price : PRICE);

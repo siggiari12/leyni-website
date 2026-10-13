@@ -79,7 +79,7 @@
       <label><span class="lbl" data-en="Note (optional)" data-is="Athugasemd (valfrjálst)">Note (optional)</span><textarea name="note" rows="2"></textarea></label>
       <label><span class="lbl" data-en="Promo code" data-is="Afsláttarkóði">Promo code</span>
         <span style="display:flex;gap:10px">
-          <input name="promo_code" id="promoIn" style="flex:1" placeholder="LAUNCH15" />
+          <input name="promo_code" id="promoIn" style="flex:1" placeholder="" />
           <button type="button" class="btn dark" style="padding:12px 22px" onclick="applyPromo()" data-en="Apply" data-is="Virkja">Apply</button>
         </span>
         <span class="lbl" id="promoMsg" style="display:none;margin-top:8px"></span>
@@ -94,7 +94,7 @@
     <aside class="sum">
       <h3 data-en="Your order" data-is="Pöntunin þín">Your order</h3>
       <div id="sumItems"></div>
-      <div class="tot" id="sumDiscRow" style="margin-top:14px;font-weight:400;display:none"><span class="lbl">LAUNCH15</span><span id="sumDisc" style="font-family:var(--sans);font-size:.85rem"></span></div>
+      <div class="tot" id="sumDiscRow" style="margin-top:14px;font-weight:400;display:none"><span class="lbl" data-en="Discount" data-is="Afsláttur">Discount</span><span id="sumDisc" style="font-family:var(--sans);font-size:.85rem"></span></div>
       <div class="tot" style="margin-top:14px;font-weight:400"><span class="lbl" data-en="Shipping" data-is="Sending">Shipping</span><span id="sumShip" style="font-family:var(--sans);font-size:.85rem"></span></div>
       <div class="tot"><span data-en="Total" data-is="Samtals">Total</span><span id="sumTotal"></span></div>
     </aside>
