@@ -21,8 +21,8 @@ const soldOut = slug => { const p = prod(slug); return p ? (!p.preorder && p.sto
 const lowStock = slug => { const p = prod(slug); return (p && !p.preorder && p.stock > 0 && p.stock <= 3) ? p.stock : 0; };
 
 /* ---------- Collection data (signature colours sampled from the artwork) ---------- */
-const PRICE_FULL = 14900;            // ISK
-const PRICE = 14900;                 // flat price; promo codes are applied at checkout
+const PRICE_FULL = 18600;            // ISK
+const PRICE = 18600;                 // flat price; promo codes are applied at checkout
 const priceHTML = (slug) => {
   const p = slug ? prod(slug) : null;
   return money(p ? p.price : PRICE);
