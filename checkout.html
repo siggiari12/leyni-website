@@ -164,7 +164,7 @@
     try{
       const r=await fetch(API+'/api/orders',{method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({items,customer,promo_code:PROMO.code})});
+        body:JSON.stringify({items,customer,promo_code:PROMO.code,lang:l})});
       const d=await r.json();
       if(!r.ok) throw new Error(d.error||'error');
       setCart([]);
